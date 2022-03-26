@@ -1,0 +1,59 @@
+TABLE: departments
+id
+name
+created_at
+updated_at
+
+TABLE: users
+id
+name
+lastname
+email
+password
+photo
+phone
+martech_number
+department_id
+is_super
+created_at
+updated_at
+
+
+TABLE:apps
+name
+title
+server_url
+picrure_url
+
+TABLE: roles
+id
+title
+name
+sort
+
+
+TABLE: apps_roles
+id
+application_id
+role_id
+
+
+TABLE: user_permissions
+id
+app_rol_id
+user_id
+token
+
+
+TABLE: servers (USA, MEX)
+id
+name
+server_url
+active
+configured
+
+TABLE: email_domains
+id
+name
+
+
