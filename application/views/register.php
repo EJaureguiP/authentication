@@ -38,38 +38,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="d-flex align-items-center"><img src="<?php echo base_url() ?>/vendor/public/assets/img/icons/logo.jpg" alt="phoenix" width="240"></div>
               </a>
 
-              <div class="text-center mb-7">
-                <h3>Account Registration</h3>
-                <p class="text-700">Get access with your martech email</p>
-              </div>
               
-              <form class="row g-3">
+              <div class="card shadow-none border border-300 my-5" data-component-card>
+                  <div class="card-header p-4 border-bottom border-300 bg-soft">
+                    <div class="row g-3 justify-content-between align-items-end">
+                      <div class="col-12 col-md">
+                        <h3 class="text-900 mb-0" >Account Registration</h3>
+                        <p class="mb-0 mt-2 text-800">Get access with your martech email</p>
+                      </div>
+                     
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                  <form class="row g-3 m-3">
                         <div class="col-md-12"><label class="form-label" for="inputName">Email</label> 
                           <div class="input-group mb-3">   
                             <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
                             <span class="input-group-text" id="basic-addon1">@</span>
-                            <input class="form-control" type="text" placeholder="Username" aria-label="server" aria-describedby="basic-addon1">
+                            <select class="form-select" id="inputState">
+                            <option selected="selected">Choose...</option>
+                            <option>...</option>
+                          </select>
                           </div>               
                         </div>
                     
                         
-                        <div class="col-md-6"><label class="form-label" for="inputName">Name</label> <input class="form-control" id="inputEmail4" type="text"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputLastname">Lastname</label> <input class="form-control" id="inputPassword4" type="text"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserName">Name</label> <input class="form-control" id="inputUserName" type="text"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserLastname">Lastname</label> <input class="form-control" id="inputUserLastname" type="text"></div>
                        
-                        
-                        <div class="col-12"><label class="form-label" for="inputAddress">Address</label> <input class="form-control" id="inputAddress" placeholder="1234 Main St"></div>
-                        <div class="col-12"><label class="form-label" for="inputAddress2">Address 2</label> <input class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputCity">City</label> <input class="form-control" id="inputCity"></div>
-                        <div class="col-md-4"><label class="form-label" for="inputState">State</label> <select class="form-select" id="inputState">
-                            <option selected="selected">Choose...</option>
-                            <option>...</option>
-                          </select></div>
-                        <div class="col-md-2"><label class="form-label" for="inputZip">Zip</label> <input class="form-control" id="inputZip"></div>
-                        <div class="col-12">
-                          <div class="form-check"><input class="form-check-input" id="gridCheck" type="checkbox"> <label class="form-check-label" for="gridCheck">Check me out</label></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserPassword">Password</label> <input class="form-control" id="inputUserPassword" type="password"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Retype Password</label> <input class="form-control" id="inputRetypePassword" type="password"></div>
+
+                        <div class="row flex-center mt-3">
+                        <div class="col-auto "><button class="btn btn-secondary" type="submit">CANCEL</button></div>
+                        <div class="col-auto "><button class="btn btn-primary" type="submit">REGISTER</button></div>
                         </div>
-                        <div class="col-12"><button class="btn btn-primary" type="submit">Sign in</button></div>
+                  
+
                       </form>
+                  </div>
+              </div>
+
+
+
+                      
                   
             </div>
           </div>

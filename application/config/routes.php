@@ -55,3 +55,17 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['register']['get'] = 'home/register';
+
+
+$route['application']['get'] = 'application/index';
+
+$route['departments']['get'] = 'department/index';
+$route['departments/create']['get'] = 'department/create';
+$route['departments/insert']['post'] = 'department/insert';
+
+$route['departments/show/(:num)']['get'] = 'department/show/$1';
+
+$route['departments/edit/(:num)']['get'] = 'department/edit/$1';
+$route['departments/update']['post'] = 'department/update';
+
+$route['departments/delete']['post'] = 'department/delete';

@@ -10,11 +10,13 @@ name
 lastname
 email
 password
+
 photo
 phone
 martech_number
 department_id
 is_super
+
 created_at
 updated_at
 
