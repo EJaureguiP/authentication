@@ -14,7 +14,7 @@ class Department extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('departments', $this->getDepartments());
+		$this->load->view('departments/departments', $this->getDepartments());
 	}
 
 	public function getDepartments()
@@ -71,7 +71,7 @@ class Department extends CI_Controller {
 
 			$data = $this->getDepartments();
 			$data['success'] = 'The deparment ' . $department_name . ' was inserted';
-			$this->load->view('departments', $data);
+			$this->load->view('departments/departments', $data);
 		}
 
 	}
@@ -124,7 +124,7 @@ class Department extends CI_Controller {
 	
 			$data = $this->getDepartments();
 			$data['success'] = 'The deparment ' . $department_name . ' was updated';
-			$this->load->view('departments', $data);
+			$this->load->view('departments/departments', $data);
 		}
 	}
 
@@ -140,7 +140,7 @@ class Department extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			$data = ['has_errors' => TRUE];		
-			$this->load->view('departments', $data);
+			$this->load->view('departments/departments', $data);
 		}
 		else
 		{
@@ -150,7 +150,7 @@ class Department extends CI_Controller {
 			$data = $this->getDepartments();
 
 			$data['success'] = 'The deparment was deleted';
-			$this->load->view('departments', $data);
+			$this->load->view('departments/departments', $data);
 		}
 	}
 
