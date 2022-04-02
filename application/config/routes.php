@@ -55,7 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['register']['get'] = 'home/register';
-
+$route['register']['post'] = 'home/register_save';
 
 $route['application']['get'] = 'application/index';
 

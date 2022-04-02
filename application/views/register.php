@@ -50,24 +50,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
                   <div class="card-body p-0">
-                  <form class="row g-3 m-3">
+                  <form class="row g-3 m-3" method="post" action="<?php echo base_url() ?>index.php/register">
                         <div class="col-md-12"><label class="form-label" for="inputName">Email</label> 
                           <div class="input-group mb-3">   
-                            <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
+                            <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="email">
                             <span class="input-group-text" id="basic-addon1">@</span>
-                            <select class="form-select" id="inputState">
-                            <option selected="selected">Choose...</option>
-                            <option>...</option>
-                          </select>
+                            <select class="form-select" id="inputState" name="domain">
+                                                  
+                            <?php 
+                              foreach($domains as $domain)
+                              {
+                                echo '<option>' . $domain->domain_name . '</option>';
+                              }
+                            ?>
+                            </select>
                           </div>               
                         </div>
                     
                         
-                        <div class="col-md-6"><label class="form-label" for="inputUserName">Name</label> <input class="form-control" id="inputUserName" type="text"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputUserLastname">Lastname</label> <input class="form-control" id="inputUserLastname" type="text"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserName">Name</label> <input class="form-control" id="inputUserName" type="text" name="user_name"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserLastname">Lastname</label> <input class="form-control" id="inputUserLastname" type="text" name="user_lastname"></div>
                        
-                        <div class="col-md-6"><label class="form-label" for="inputUserPassword">Password</label> <input class="form-control" id="inputUserPassword" type="password"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Retype Password</label> <input class="form-control" id="inputRetypePassword" type="password"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserPassword">Password</label> <input class="form-control" id="inputUserPassword" type="password" name="user_password"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Retype Password</label> <input class="form-control" id="inputRetypePassword" type="password" nqme="retype"></div>
 
                         <div class="row flex-center mt-3">
                         <div class="col-auto "><button class="btn btn-secondary" type="submit">CANCEL</button></div>

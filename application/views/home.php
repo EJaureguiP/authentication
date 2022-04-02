@@ -371,7 +371,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
               <li class="nav-item"><a class="nav-link active" aria-current="page" id="navbarDropdownNotification" href="#" >INGRESAR</a></li>
-              <li class="nav-item"><a class="nav-link" aria-current="page" id="navbarRegister" href="#" >REGISTRAR</a></li>
+              <li class="nav-item"><a class="nav-link" aria-current="page" id="navbarRegister" href="<?php echo base_url() ?>index.php/home/register" >REGISTRAR</a></li>
             
               <li class="nav-item dropdown"><a class="nav-link lh-1 px-0 ms-5" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <div class="avatar avatar-l"><img class="rounded-circle" src="<?php echo base_url() ?>/vendor/public/assets/img/team/57.png" alt=""></div>
