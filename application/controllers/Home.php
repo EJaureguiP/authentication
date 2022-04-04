@@ -67,8 +67,41 @@ class Home extends CI_Controller {
 		{
 			$this->user->insert($data);
 		}
+	}
 
+	public function login()
+	{
+		//Load model
+		$this->load->model('domain');
+		$data['domains'] =	$this->domain->get_entries();	
+		//echo json_encode($data);
+		$this->load->view('login', $data);
+	}
+
+
+	public function login_enter()
+	{
+		$this->load->model('user');
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('user', 'User', 'required');
+		$this->form_validation->set_rules('domain', 'Domain', 'required');
+		$this->form_validation->set_rules('user_password', 'Password', 'required',
+				array('required' => 'You must provide a %s.')
+		);
 		
+		
+		if ($this->form_validation->run() == FALSE)
+        {
+			$data['domains'] =	$this->domain->get_entries();	
+        	$this->load->view('register', $data);
+        } else
+		{
+			$this->user->insert($data);
+		}
 
 	}
+
+
 }

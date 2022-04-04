@@ -370,7 +370,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control form-control-sm search-input search min-h-auto" type="search" placeholder="Search..." aria-label="Search"> <span class="fas fa-search search-box-icon"></span></form>
             </div>
             <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
-              <li class="nav-item"><a class="nav-link active" aria-current="page" id="navbarDropdownNotification" href="#" >INGRESAR</a></li>
+              <li class="nav-item"><a class="nav-link active" aria-current="page" id="navbarDropdownNotification" href="<?php echo base_url() ?>index.php/home/login" >INGRESAR</a></li>
               <li class="nav-item"><a class="nav-link" aria-current="page" id="navbarRegister" href="<?php echo base_url() ?>index.php/home/register" >REGISTRAR</a></li>
             
               <li class="nav-item dropdown"><a class="nav-link lh-1 px-0 ms-5" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
