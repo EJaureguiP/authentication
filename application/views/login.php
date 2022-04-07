@@ -51,9 +51,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                   <div class="card-body p-0">
                   <form class="row g-3 m-3" method="post" action="<?php echo base_url() ?>index.php/login">
+
+                  <?php echo validation_errors('<div class="error">', '</div>'); ?>
+
                         <div class="col-md-12"><label class="form-label" for="inputName">Email</label> 
                           <div class="input-group mb-3">   
-                            <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="email">
+                            <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="user">
                             <span class="input-group-text" id="basic-addon1">@</span>
                             <select class="form-select" id="inputState" name="domain">
                                                   

@@ -87,3 +87,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 defined('DATETIME_FORMAT')      OR define('DATETIME_FORMAT', 'Y-m-d H:i:s');
 defined('DATE_FORMAT')      OR define('DATE_FORMAT', 'Y-m-d');
+
+
+defined('JWT_KEY')      OR define('JWT_KEY', 'martechmedicals.com');
