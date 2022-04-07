@@ -1,56 +1,29 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!doctype html>
-<html lang="en-US" dir="ltr">
+?>
 
+
+<!doctype html>
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Phoenix</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url() ?>/vendor/public/assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url() ?>/vendor/public/assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url() ?>/vendor/public/assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url() ?>/vendor/public/assets/img/favicons/favicon.ico">
-    <link rel="manifest" href="<?php echo base_url() ?>/vendor/public/assets/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="<?php echo base_url() ?>/vendor/public/assets/img/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
-    <link href="<?php echo base_url() ?>/vendor/public/assets/css/phoenix.min.css" rel="stylesheet" id="style-default">
-    <link href="<?php echo base_url() ?>/vendor/public/assets/css/user.min.css" rel="stylesheet" id="user-style-default">
-    <style>
-      body {
-        opacity: 0;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
   </head>
-
   <body>
-    <main class="main" id="top">
-      <div class="container-fluid px-0">
-        <div class="container">
-          <div class="row flex-center min-vh-100 py-5">
-            <div class="col-sm-10 col-md-10 col-lg-8 col-xl-8 col-xxl-6">
-              
-              <a class="d-flex flex-center text-decoration-none mb-4" href="../../../index.html">
-                <div class="d-flex align-items-center"><img src="<?php echo base_url() ?>/vendor/public/assets/img/icons/logo.jpg" alt="phoenix" width="240"></div>
-              </a>
 
-              
-              <div class="card shadow-none border border-300 my-5" data-component-card>
-                  <div class="card-header p-4 border-bottom border-300 bg-soft">
-                    <div class="row g-3 justify-content-between align-items-end">
-                      <div class="col-12 col-md">
-                        <h3 class="text-900 mb-0" >Account Registration</h3>
-                        <p class="mb-0 mt-2 text-800">Get access with your martech email</p>
-                      </div>
-                     
-                    </div>
-                  </div>
-                  <div class="card-body p-0">
-                  <form class="row g-3 m-3" method="post" action="<?php echo base_url() ?>index.php/register">
+  <div class="container">
+     
+
+  <div class="card  mt-3"">
+    <div class="card-body">
+    <h2 class="text-center">User registration</h2>
+    <form class="row g-3" method="post" action="<?php echo base_url() ?>index.php/register">
                         <div class="col-md-12"><label class="form-label" for="inputName">Email</label> 
                           <div class="input-group mb-3">   
                             <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="email">
@@ -74,26 +47,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-6"><label class="form-label" for="inputUserPassword">Password</label> <input class="form-control" id="inputUserPassword" type="password" name="user_password"></div>
                         <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Retype Password</label> <input class="form-control" id="inputRetypePassword" type="password" nqme="retype"></div>
 
-                        <div class="row flex-center mt-3">
-                        <div class="col-auto "><button class="btn btn-secondary" type="submit">CANCEL</button></div>
-                        <div class="col-auto "><button class="btn btn-primary" type="submit">REGISTER</button></div>
+                        <div class="mt-3 text-end">
+                          <div class="btn-group">
+                            <button class="btn btn-secondary" type="submit">CANCEL</button> 
+                            <button class="btn btn-primary ms-3" type="submit">REGISTER</button>                
+                          </div>
                         </div>
                   
 
                       </form>
-                  </div>
-              </div>
+    </div>
+  </div>
 
+  
 
+  
+      
+   </div>
 
-                      
-                  
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <script src="<?php echo base_url() ?>/vendor/public/assets/js/phoenix.js"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
   </body>
-
 </html>
+
+
+
+
