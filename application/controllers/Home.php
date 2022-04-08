@@ -33,6 +33,12 @@ class Home extends CI_Controller {
 	}
 
 
+
+	public function dashboard()
+	{
+		$this->load->view('dashboard');
+	}
+
 	public function register()
 	{
 		//Load model

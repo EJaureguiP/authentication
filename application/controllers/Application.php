@@ -24,5 +24,12 @@ class Application extends CI_Controller {
 	}
 
 
+	public function get_all()
+	{
+		$this->db->select('*');
+		$this->db->from('apps');
+		echo json_encode($this->db->get()->result());
+	}
+
 
 }

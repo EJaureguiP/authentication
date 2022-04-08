@@ -54,6 +54,10 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
+$route['dashboard']['get'] = 'dashboard/index';
+$route['dashboard/apps']['get'] = 'dashboard/apps';
+
+
 $route['register']['get'] = 'home/register';
 $route['register']['post'] = 'home/register_save';
 
@@ -61,6 +65,7 @@ $route['login']['get'] = 'home/login';
 $route['login']['post'] = 'home/login_enter';
 
 $route['application']['get'] = 'application/index';
+$route['application/all'] = 'application/get_all';
 
 $route['departments']['get'] = 'department/index';
 $route['departments/create']['get'] = 'department/create';
