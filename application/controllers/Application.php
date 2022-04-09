@@ -32,4 +32,48 @@ class Application extends CI_Controller {
 	}
 
 
+	public function create()
+	{
+		//echo json_encode($this->input->post() );
+		$data = array(
+			'app_name' => $this->input->post('app_name'),
+			'app_identifier' => $this->input->post('app_identifier'),
+			'app_site_url' => $this->input->post('app_site_url'),
+			'app_image_url' => $this->input->post('app_image_url'),
+		);
+		$this->db->insert('apps', $data);
+		$insert_id = $this->db->insert_id();
+		$data['app_id'] = $insert_id;
+
+		$response['result'] = 'ok';
+		$response['data'] = $data;
+		echo json_encode($response);
+	}
+
+	public function update()
+	{
+
+		$data = array(
+			'app_name' => $this->input->post('app_name'),
+			'app_identifier' => $this->input->post('app_identifier'),
+			'app_site_url' => $this->input->post('app_site_url'),
+			'app_image_url' => $this->input->post('app_image_url'),
+		);
+
+		$this->db->where('app_id', $this->input->post('app_id') );
+		$this->db->update('apps', $data);
+
+		$response['result'] = 'ok';
+		$response['data'] = $data;
+		echo json_encode($response);
+	}
+
+	public function delete()
+	{
+		$this->db->where('app_id', $this->input->post('app_id') );
+		$this->db->delete('apps');
+		$response['result'] = 'ok';
+		echo json_encode($response);
+	}
+
 }

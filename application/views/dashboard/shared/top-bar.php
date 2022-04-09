@@ -1,7 +1,7 @@
 <ul class="nav justify-content-end nav-pills">
   
   <li class="nav-item">
-    <a class="nav-link " aria-current="page" href="#">Apps</a>
+    <a class="nav-link " aria-current="page" href="<?php echo base_url() ?>index.php/dashboard/apps">Apps</a>
   </li>
 
   <li class="nav-item">

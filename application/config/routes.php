@@ -66,6 +66,7 @@ $route['login']['post'] = 'home/login_enter';
 
 $route['application']['get'] = 'application/index';
 $route['application/all'] = 'application/get_all';
+$route['application/create']['post'] = 'application/create';
 
 $route['departments']['get'] = 'department/index';
 $route['departments/create']['get'] = 'department/create';

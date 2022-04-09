@@ -29,10 +29,14 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('home');
+		if( $this->session->user_email != null &&  $this->session->user_active == 1 &&  $this->session->user_is_admin == 1  )
+		{
+			redirect('dashboard', 'refresh');
+		} else
+		{
+			$this->load->view('home');
+		}
 	}
-
-
 
 	public function dashboard()
 	{
@@ -134,6 +138,22 @@ class Home extends CI_Controller {
 				$hashed_password = $result[0]['user_password'];
 				//echo $hashed_password;
 				if(password_verify($password, $hashed_password)) {
+					
+					$data = $result[0];
+
+					$user_date = array (
+						'user_email' => $data['user_email'],
+						'user_name' => $data['user_name'],
+						'user_lastname' => $data['user_lastname'],
+						'user_martech_number' => $data['user_martech_number'],
+						'user_active' => $data['user_active'],
+						'user_is_admin' => $data['user_is_admin'],
+					);
+					
+					$this->session->set_userdata($user_date);
+					redirect('/', 'refresh');
+
+					/*
 					//SUCCESS
 					$issued_at = new DateTime();
 					$issued = $issued_at->getTimestamp();
@@ -146,16 +166,12 @@ class Home extends CI_Controller {
 						'user'  => $username,
 					);
 					
-					/**
-					 * IMPORTANT:
-					 * You must specify supported algorithms for your application. See
-					 * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
-					 * for a list of spec-compliant algorithms.
-					 */
 					$jwt = JWT::encode($authentication, JWT_KEY, 'HS256');
 					$decoded = JWT::decode($jwt, new Key(JWT_KEY, 'HS256'));
 					
 					echo json_encode($decoded);	
+					*/
+
 				} else
 				{
 					echo 'Password is incorrect';

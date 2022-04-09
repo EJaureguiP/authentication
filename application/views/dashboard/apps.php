@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <tbody>
 
-        <tr ng-repeat="app in applications" >
+        <tr ng-repeat="app in applications" class="{{app.selected}}" ng-click="set_selection(app)" >
             <td>{{app.app_name }}</td>
             <td>{{app.app_identifier}}</td>
             <td>{{app.app_site_url}}</td>
@@ -87,8 +87,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <div class="d-flex bd-highlight">
   <div class="p-2 flex-grow-1 bd-highlight"><h5>App</h5></div>
-  <div class="p-2 bd-highlight"> <button type="button" class="btn btn-outline-success d-flex ">New</button></div>
-  <div class="p-2 bd-highlight"><button type="button" class="btn btn-outline-info d-flex ">Edit</button></div>
+  <div class="p-2 bd-highlight"> <button type="button" class="btn btn-outline-success d-flex " ng-disabled="!buttons.new.enabled" ng-click="action_new()">New</button></div>
+  <div class="p-2 bd-highlight"><button type="button" class="btn btn-outline-info d-flex " ng-disabled="!buttons.edit.enabled" ng-click="action_edit()">Edit</button></div>
+  <div class="p-2 bd-highlight"><button type="button" class="btn btn-outline-danger d-flex " ng-disabled="!buttons.cancel.enabled" ng-click="action_cancel()">Cancel</button></div>
 </div>
            
                 
@@ -99,28 +100,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body"> 
 
             <form>
+            <input type="text" hidden  ng-model="form.app_id.value">
+
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">App Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" ng-model="form.app_name.value" ng-disabled="!form.app_name.enabled" id="exampleInputEmail1" aria-describedby="emailHelp">
+                   
                     <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Identifier</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1">
+                    <input type="text" class="form-control" id="exampleInputPassword1" ng-model="form.app_identifier.value" ng-disabled="!form.app_identifier.enabled">
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Site Url</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1">
+                    <input type="text" class="form-control" id="exampleInputPassword1" ng-model="form.app_site_url.value" ng-disabled="!form.app_site_url.enabled">
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Image Url</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1">
+                    <input type="text" class="form-control" id="exampleInputPassword1" ng-model="form.app_image_url.value" ng-disabled="!form.app_image_url.enabled">
                 </div>
       
 
-                <a  class="btn btn-primary">Guardar</a>
+                <button  class="btn btn-primary" ng-disabled="!buttons.save.enabled" ng-click="action_save()">Guardar</button>
+
+                <p ng-if="error">{{error}}</p>
             </form>
 
             </div>
@@ -134,39 +140,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
    <script>
+
+    //set datatable init
     $(document).ready(function() {
-        var table = $('#table-apps').DataTable();
-       
-        /*
-        $('#table-apps tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-        });
-        */
-    
-    } );
-
-
-
-
+        $('#table-apps').DataTable();
+    });
 
     var app = angular.module('app-apps', []);
         
         app.controller('apps-controller', function($scope, $http, $httpParamSerializerJQLike) {
 
         const STATE_NONE = 0;
+        const STATE_CREATE_NEW = 1;
+        const STATE_SAVE = 2;
 
-        $scope.app_name = null;
-        $scope.app_identifier = null;
-        $scope.app_url = null;
-        $scope.app_image = null;
+        const STATE_SELECTED = 3;
+        const STATE_EDIT = 4;
+
+        $scope.form = {
+            app_id: { value : '', enabled: false },
+            app_name: { value : '', enabled: false },
+            app_identifier: { value : '', enabled: false },
+            app_site_url: { value : '', enabled: false },
+            app_image_url: { value : '', enabled: false },
+        }
+
+        $scope.buttons = {
+            new: { enabled: true },
+            edit: { enabled: false },
+            cancel: { enabled: false },
+            save: { enabled: false },
+        }
+        $scope.error = null;
         
         $scope.applications = [];
+        $scope.selected_application = null;
 
         $scope.state = STATE_NONE;
         $scope.last_state = STATE_NONE;
@@ -179,9 +187,74 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         $scope.setstate = function(state)
         {
-            $scope.last_state = state;
+            $scope.last_state = $scope.state;
             $scope.state = state;
             $scope.update();
+        }
+
+        $scope.clean_fields = function()
+        {
+            $scope.form.app_name.value = '';
+            $scope.form.app_identifier.value = '';
+            $scope.form.app_site_url.value = '';
+            $scope.form.app_image_url.value = '';
+        }
+
+        $scope.enable_fields = function(app_name_enabled, app_identifier_enabled, app_site_url_enabled, app_image_url_enabled)
+        {
+            $scope.form.app_name.enabled = app_name_enabled;
+            $scope.form.app_identifier.enabled = app_identifier_enabled;
+            $scope.form.app_site_url.enabled = app_site_url_enabled;
+            $scope.form.app_image_url.enabled = app_image_url_enabled;
+        }
+
+        $scope.enable_buttons = function(new_enabled, edit_enabled, cancel_enabled, save_enabled)
+        {
+            $scope.buttons.new.enabled = new_enabled;
+            $scope.buttons.edit.enabled = edit_enabled;
+            $scope.buttons.cancel.enabled = cancel_enabled;
+            $scope.buttons.save.enabled = save_enabled;
+        }
+
+        $scope.getData = function()
+        {
+            if($scope.form.app_name.value == '' || $scope.form.app_identifier.value == '')
+            {
+                $scope.error = 'Not app name and identifier provided';
+                return null;
+            }
+
+            var app = {
+                        app_id : $scope.form.app_id.value,
+                        app_name : $scope.form.app_name.value,
+                        app_identifier : $scope.form.app_identifier.value,
+                        app_site_url : $scope.form.app_site_url.value,
+                        app_image_url : $scope.form.app_image_url.value,
+                    };
+
+            return app;
+        }
+
+        $scope.set_selection = function(app)
+        {
+            console.log(app);
+            $scope.selected_application = app;
+            $scope.form.app_id.value = app.app_id;
+            $scope.setstate(STATE_SELECTED);
+
+            for (var i = 0; i < $scope.applications.length; i+=1) {
+                           //console.log("En el índice '" + i + "' hay este valor: " + miArray[i]);
+                if($scope.applications[i] == app)
+                {
+                    $scope.applications[i].selected = 'selected';
+                } else
+                {
+                    $scope.applications[i].selected = '';
+                }        
+            }
+          
+
+            //$scope.$apply();
         }
 
         $scope.update =  function()
@@ -190,16 +263,129 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             {
                 case STATE_NONE:
                 {
+                    $scope.error = null;
+
+                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
+                    $scope.enable_buttons(true, false, false, false);
+                    //app_name, app_identifier, app_site_url, app_image_url
+                    $scope.enable_fields(false, false, false, false);
+                
+                    $scope.clean_fields();
 
                     $http({
                     method: 'get',
                     url: '<?= base_url() ?>index.php/application/all'
                     }).then(function successCallback(response) {
-                        $scope.applications = response.data;				
+                        $scope.applications = response.data;
+                        
+                        for (var i = 0; i < $scope.applications.length; i+=1) {
+                           //console.log("En el índice '" + i + "' hay este valor: " + miArray[i]);
+                           $scope.applications[i].selected = 0;
+                        }
+                        
                     }); 
                 }break;
+
+                case STATE_CREATE_NEW:
+                {
+                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
+                    $scope.enable_buttons(false, false, true, true);                  
+                    //app_name, app_identifier, app_site_url, app_image_url
+                    $scope.enable_fields(true, true, true, true);
+
+                    $scope.clean_fields();
+    
+                }break;
+
+                case STATE_EDIT:
+                {
+                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
+                    $scope.enable_buttons(false, false, true, true);                  
+                    //app_name, app_identifier, app_site_url, app_image_url
+                    $scope.enable_fields(true, true, true, true);
+
+                }break;
+
+                case STATE_SAVE:
+                {
+                    console.log("enter save");
+                    var data = $scope.getData();
+                    if(data != null)
+                    {
+                        console.log("state " + $scope.state);
+                        console.log("last state " + $scope.last_state);
+
+                        if($scope.last_state == STATE_CREATE_NEW)
+                        {
+                            console.log("enter new")
+                            $http({
+                            url: '<?php echo base_url() ?>index.php/application/create',
+                            method: 'POST',
+                            data: $httpParamSerializerJQLike( data ),
+                            headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                            }).then(function successCallback(response) {
+                                console.log(response.data);		
+                                $scope.setstate(STATE_NONE);		
+                            });
+
+                        } else if($scope.last_state == STATE_EDIT)
+                        {
+                            console.log("enter edit")
+                            $http({
+                            url: '<?php echo base_url() ?>index.php/application/update',
+                            method: 'POST',
+                            data: $httpParamSerializerJQLike( data ),
+                            headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                            }).then(function successCallback(response) {
+                                console.log(response.data);		
+                                $scope.setstate(STATE_SELECTED);		
+                            });
+                        }
+
+                     
+                    }
+                }break
+
+                case STATE_SELECTED:
+                {
+                       //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
+                       $scope.enable_buttons(true, true, false, false);                  
+                        //app_name, app_identifier, app_site_url, app_image_url
+                       $scope.enable_fields(false, false, false, false);
+
+                        $scope.form.app_name.value = $scope.selected_application.app_name;
+                        $scope.form.app_identifier.value = $scope.selected_application.app_identifier;
+                        $scope.form.app_site_url.value = $scope.selected_application.app_site_url;
+                        $scope.form.app_image_url.value = $scope.selected_application.app_image_url
+
+                } break;
             }
         }
+
+        $scope.action_new = function()
+        {
+            $scope.setstate(STATE_CREATE_NEW);
+        }
+
+        $scope.action_cancel = function()
+        {
+            $scope.setstate(STATE_NONE);
+        }
+
+        $scope.action_save = function()
+        {
+            $scope.setstate(STATE_SAVE);
+        }
+
+        $scope.action_edit = function()
+        {
+            $scope.setstate(STATE_EDIT);
+        }
+
 
 
         $scope.init();
