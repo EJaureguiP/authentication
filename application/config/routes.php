@@ -56,6 +56,10 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard']['get'] = 'dashboard/index';
 $route['dashboard/apps']['get'] = 'dashboard/apps';
+$route['dashboard/levels']['get'] = 'dashboard/levels';
+$route['dashboard/types']['get'] = 'dashboard/types';
+
+$route['dashboard/permissions']['get'] = 'dashboard/permissions';
 
 
 $route['register']['get'] = 'home/register';
@@ -67,13 +71,33 @@ $route['login']['post'] = 'home/login_enter';
 $route['application']['get'] = 'application/index';
 $route['application/all'] = 'application/get_all';
 $route['application/create']['post'] = 'application/create';
+$route['application/update']['post'] = 'application/update';
+
+$route['level/all'] = 'level/get_all';
+$route['level/create']['post'] = 'level/create';
+$route['level/update']['post'] = 'level/update';
+$route['level/delete']['post'] = 'level/delete';
+
+$route['type/all'] = 'type/get_all';
+$route['type/create']['post'] = 'type/create';
+$route['type/update']['post'] = 'type/update';
+$route['type/delete']['post'] = 'type/delete';
+
+
+$route['application_type/all'] = 'levelstypesapplication/get_app_types';
+$route['application_type/add']['post'] = 'levelstypesapplication/add_app_type';
+$route['application_type/remove']['post'] = 'levelstypesapplication/remove_app_type';
+
+$route['application_level/all'] = 'levelstypesapplication/get_app_levels';
+$route['application_level/add']['post'] = 'levelstypesapplication/add_app_level';
+$route['application_level/remove']['post'] = 'levelstypesapplication/remove_app_level';
+
+
 
 $route['departments']['get'] = 'department/index';
 $route['departments/create']['get'] = 'department/create';
 $route['departments/insert']['post'] = 'department/insert';
-
 $route['departments/show/(:num)']['get'] = 'department/show/$1';
-
 $route['departments/edit/(:num)']['get'] = 'department/edit/$1';
 $route['departments/update']['post'] = 'department/update';
 
