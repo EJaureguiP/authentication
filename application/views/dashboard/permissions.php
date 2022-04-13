@@ -38,10 +38,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <select  class="form-select w-50 fs-5" ng-options="app as app.app_name for app in applications track by app.app_id" ng-model="selected_application" ng-change="selected_change()"></select>
     </div>
 </div>   
-    <div class="row">
+
+
+    <div class="row" ng-if="selected_application">
         <div class="col">
             <div class="card">
-            <h5 class="card-header">Levels</h5>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <h5>Levels</h5>
+                    </div>
+
+                    <div class="col-auto" >
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLevelModal">Agregar</button>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 
             
@@ -50,6 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <tr>
                     <th>Level Name</th>
                     <th>Level Value</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -58,6 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <tr ng-repeat="app_level in apps_levels"  >
                 <td>{{app_level.level_name }}</td>
                 <td>{{app_level.level_value}}</td>
+
+                <td><button class="btn btn-danger" ng-click="remove_level(app_level)">Eliminar</button></td>
             </tr>
 
 
@@ -71,12 +86,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             </div>
         </div>
+    </div>
 
 
-        <div class="row my-3">
+    <div class="row my-3" ng-if="selected_application">
         <div class="col">
             <div class="card">
-            <h5 class="card-header">User Types</h5>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <h5>User Types</h5>
+                    </div>
+
+                    <div class="col-auto" >
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewTypeModal">Agregar</button>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 
             
@@ -85,6 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <tr>
                     <th>Type Name</th>
                     <th>Type Value</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -93,6 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <tr ng-repeat="app_type in apps_types"  >
                 <td>{{app_type.type_name }}</td>
                 <td>{{app_type.type_value}}</td>
+                <td><button class="btn btn-danger" ng-click="remove_type(app_type)">Eliminar</button></td>
             </tr>
 
 
@@ -109,7 +137,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </div>
 
-   </div>
+    <div class="modal fade" id="addNewLevelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add new User Level</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <select name="mySelect" id="mySelect" class="form-select"
+                ng-options="level.level_name for level in levels track by level.level_id"
+                ng-model="selected_level"></select>
+
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="add_level()" data-bs-dismiss="modal">Agregar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="modal fade" id="addNewTypeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add new User Type</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <select name="mySelect" id="mySelect" class="form-select"
+                ng-options="type.type_name for type in types track by type.type_id"
+                ng-model="selected_type"></select>
+
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="add_type()" data-bs-dismiss="modal">Agregar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+
+
+
 
 
    <script>
@@ -126,13 +202,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         app.controller('apps-controller', function($scope, $http, $httpParamSerializerJQLike) {
 
-        
-        
+             
         $scope.applications = [];
         $scope.selected_application = null;
 
+        $scope.levels = [];
+        $scope.selected_level = null; 
         $scope.apps_levels = [];
 
+        $scope.types = [];
+        $scope.selected_type = null; 
         $scope.apps_types = [];
 
         
@@ -146,6 +225,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     }).then(function successCallback(response) {
                         $scope.applications = response.data;
                     }); 
+
+                    $http({
+                    method: 'get',
+                    url: '<?= base_url() ?>index.php/level/get_all'
+                    }).then(function successCallback(response) {
+                        console.log(response.data);
+                        $scope.levels = response.data;            
+                    }); 
+
+                    $http({
+                        method: 'get',
+                        url: '<?= base_url() ?>index.php/type/get_all'
+                        }).then(function successCallback(response) {
+                            console.log(response.data);
+                            $scope.types = response.data;            
+                        }); 
         }
 
        $scope.selected_change = function()
@@ -161,136 +256,151 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
        $scope.loadAppsLevels = function()
        {
-        $http({
+           console.log('loadAppsLevels');
+            $http({
                     method: 'get',
-                    url: '<?= base_url() ?>index.php/application_level/all'
+                    url: '<?= base_url() ?>index.php/application_level/all?app_id=' + $scope.selected_application.app_id
                     }).then(function successCallback(response) {
+
+                        console.log('asdf');
+                        console.log(response.data);
                         $scope.apps_levels = response.data;            
                     }); 
        }
 
 
+       /*
+        $scope.levels = [];
+        $scope.selected_level = null; 
+        $scope.apps_levels = [];
+       */
+       $scope.add_level = function()
+       {
+           //console.log('add level');
+            var data = {
+                app_id:  $scope.selected_application.app_id,
+                level_id: $scope.selected_level.level_id
+            };
+
+            if($scope.selected_level != null)
+            {
+                console.log(data);
+                $http({
+                url: '<?php echo base_url() ?>index.php/application_level/add',
+                method: 'POST',
+                data: $httpParamSerializerJQLike( data ),
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }
+                }).then(function successCallback(response) {
+                    console.log(response.data);		
+                    $scope.loadAppsLevels();
+                });
+            }
+       
+
+           $scope.selected_level = null; 
+       }
+
+       $scope.remove_level = function(app_level)
+       {
+        console.log(app_level);
+        
+        var data = {
+                app_id:  $scope.selected_application.app_id,
+                level_id: app_level.level_id
+            };
+
+    
+                $http({
+                url: '<?php echo base_url() ?>index.php/application_level/remove',
+                method: 'POST',
+                data: $httpParamSerializerJQLike( data ),
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }
+                }).then(function successCallback(response) {
+                    console.log(response.data);		
+                    $scope.loadAppsLevels();
+                });
+            
+            
+       }
+
+
        $scope.loadAppsTypes = function()
        {
-        $http({
+           
+        console.log('loadAppsTypes');
+            $http({
                     method: 'get',
-                    url: '<?= base_url() ?>index.php/application_type/all'
+                    url: '<?= base_url() ?>index.php/application_type/all?app_id=' + $scope.selected_application.app_id
                     }).then(function successCallback(response) {
+
+                        console.log('asdf');
+                        console.log(response.data);
                         $scope.apps_types = response.data;            
                     }); 
        }
 
 
 
-        $scope.update =  function()
-        {
-            switch($scope.state)
+
+       $scope.add_type = function()
+       {
+           //console.log('add level');
+            var data = {
+                app_id:  $scope.selected_application.app_id,
+                type_id: $scope.selected_type.type_id
+            };
+
+            if($scope.selected_type != null)
             {
-                case STATE_NONE:
-                {
-                    $scope.error = null;
-
-                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
-                    $scope.enable_buttons(true, false, false, false);
-                    //app_name, app_identifier, app_site_url, app_image_url
-                    $scope.enable_fields(false, false, false, false);
-                
-                    $scope.clean_fields();
-
-                    $http({
-                    method: 'get',
-                    url: '<?= base_url() ?>index.php/application/all'
-                    }).then(function successCallback(response) {
-                        $scope.applications = response.data;
-                        
-                        for (var i = 0; i < $scope.applications.length; i+=1) {
-                           //console.log("En el índice '" + i + "' hay este valor: " + miArray[i]);
-                           $scope.applications[i].selected = 0;
-                        }
-                        
-                    }); 
-                }break;
-
-                case STATE_CREATE_NEW:
-                {
-                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
-                    $scope.enable_buttons(false, false, true, true);                  
-                    //app_name, app_identifier, app_site_url, app_image_url
-                    $scope.enable_fields(true, true, true, true);
-
-                    $scope.clean_fields();
-    
-                }break;
-
-                case STATE_EDIT:
-                {
-                    //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
-                    $scope.enable_buttons(false, false, true, true);                  
-                    //app_name, app_identifier, app_site_url, app_image_url
-                    $scope.enable_fields(true, true, true, true);
-
-                }break;
-
-                case STATE_SAVE:
-                {
-                    console.log("enter save");
-                    var data = $scope.getData();
-                    if(data != null)
-                    {
-                        console.log("state " + $scope.state);
-                        console.log("last state " + $scope.last_state);
-
-                        if($scope.last_state == STATE_CREATE_NEW)
-                        {
-                            console.log("enter new")
-                            $http({
-                            url: '<?php echo base_url() ?>index.php/application/create',
-                            method: 'POST',
-                            data: $httpParamSerializerJQLike( data ),
-                            headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                            }
-                            }).then(function successCallback(response) {
-                                console.log(response.data);		
-                                $scope.setstate(STATE_NONE);		
-                            });
-
-                        } else if($scope.last_state == STATE_EDIT)
-                        {
-                            console.log("enter edit")
-                            console.log(data);
-                            $http({
-                            url: '<?php echo base_url() ?>index.php/application/update',
-                            method: 'POST',
-                            data: $httpParamSerializerJQLike( data ),
-                            headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                            }
-                            }).then(function successCallback(response) {
-                                console.log(response.data);		
-                                $scope.setstate(STATE_SELECTED);		
-                            });
-                        }
-
-                     
-                    }
-                }break
-
-                case STATE_SELECTED:
-                {
-                       //(new_enabled, edit_enabled, cancel_enabled, save_enabled)
-                       $scope.enable_buttons(true, true, false, false);                  
-                        //app_name, app_identifier, app_site_url, app_image_url
-                       $scope.enable_fields(false, false, false, false);
-
-                        $scope.form.app_name.value = $scope.selected_application.app_name;
-                        $scope.form.app_identifier.value = $scope.selected_application.app_identifier;
-                        $scope.form.app_site_url.value = $scope.selected_application.app_site_url;
-                        $scope.form.app_image_url.value = $scope.selected_application.app_image_url
-
-                } break;
+                console.log(data);
+                $http({
+                url: '<?php echo base_url() ?>index.php/application_type/add',
+                method: 'POST',
+                data: $httpParamSerializerJQLike( data ),
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }
+                }).then(function successCallback(response) {
+                    console.log(response.data);		
+                    $scope.loadAppsTypes();
+                });
             }
-        }
+       
+
+           $scope.selected_type = null; 
+       }
+
+       $scope.remove_type = function(app_type)
+       {
+        console.log(app_type);
+        
+        var data = {
+                app_id:  $scope.selected_application.app_id,
+                type_id: app_type.type_id
+            };
+
+    
+                $http({
+                url: '<?php echo base_url() ?>index.php/application_type/remove',
+                method: 'POST',
+                data: $httpParamSerializerJQLike( data ),
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }
+                }).then(function successCallback(response) {
+                    console.log(response.data);		
+                    $scope.loadAppsTypes();
+                });
+            
+            
+       }
+
+
+
 
         $scope.init();
 

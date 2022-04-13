@@ -4,7 +4,14 @@
     <a class="nav-link " aria-current="page" href="<?php echo base_url() ?>index.php/dashboard/apps">Apps</a>
   </li>
 
+
+  <li class="nav-item">
+    <a class="nav-link " aria-current="page" href="<?php echo base_url() ?>index.php/dashboard/users">Users</a>
+  </li>
+
+
   <li class="nav-item dropdown">
+  
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Permissions</a>
     
     <ul class="dropdown-menu">

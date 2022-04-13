@@ -58,6 +58,7 @@ $route['dashboard']['get'] = 'dashboard/index';
 $route['dashboard/apps']['get'] = 'dashboard/apps';
 $route['dashboard/levels']['get'] = 'dashboard/levels';
 $route['dashboard/types']['get'] = 'dashboard/types';
+$route['dashboard/users']['get'] = 'dashboard/users';
 
 $route['dashboard/permissions']['get'] = 'dashboard/permissions';
 
@@ -83,14 +84,19 @@ $route['type/create']['post'] = 'type/create';
 $route['type/update']['post'] = 'type/update';
 $route['type/delete']['post'] = 'type/delete';
 
+$route['user/all'] = 'user/get_all';
+$route['user/create']['post'] = 'user/create';
+$route['user/update']['post'] = 'user/update';
+$route['user/delete']['post'] = 'user/delete';
 
-$route['application_type/all'] = 'levelstypesapplication/get_app_types';
-$route['application_type/add']['post'] = 'levelstypesapplication/add_app_type';
-$route['application_type/remove']['post'] = 'levelstypesapplication/remove_app_type';
 
-$route['application_level/all'] = 'levelstypesapplication/get_app_levels';
-$route['application_level/add']['post'] = 'levelstypesapplication/add_app_level';
-$route['application_level/remove']['post'] = 'levelstypesapplication/remove_app_level';
+$route['application_type/all']['get']  = 'levelstypesapplications/get_app_types';
+$route['application_type/add']['post'] = 'levelstypesapplications/add_app_type';
+$route['application_type/remove']['post'] = 'levelstypesapplications/remove_app_type';
+
+$route['application_level/all']['get']  = 'levelsTypesApplications/get_app_levels';
+$route['application_level/add']['post'] = 'levelstypesapplications/add_app_level';
+$route['application_level/remove']['post'] = 'levelstypesapplications/remove_app_level';
 
 
 

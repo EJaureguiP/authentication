@@ -39,4 +39,11 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/types', $data);
 	}
 
+
+	public function users()
+	{
+		$data['users'] = $this->db->get('users')->result_array();
+		$this->load->view('dashboard/users', $data);
+	}
+
 }
