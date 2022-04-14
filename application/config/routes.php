@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -60,6 +60,13 @@ $route['dashboard/levels']['get'] = 'dashboard/levels';
 $route['dashboard/types']['get'] = 'dashboard/types';
 $route['dashboard/users']['get'] = 'dashboard/users';
 
+
+
+$route['dashboard/user/create']['get'] = 'dashboard/user_create';
+$route['dashboard/user/create']['post'] = 'dashboard/user_create_save';
+
+
+
 $route['dashboard/permissions']['get'] = 'dashboard/permissions';
 
 
@@ -88,6 +95,9 @@ $route['user/all'] = 'user/get_all';
 $route['user/create']['post'] = 'user/create';
 $route['user/update']['post'] = 'user/update';
 $route['user/delete']['post'] = 'user/delete';
+$route['user/permissions']['get'] = 'user/get_permissions'; //json
+$route['user/get_apps_levels']['get'] = 'user/get_apps_levels'; //json
+$route['user/get_apps_types']['get'] = 'user/get_apps_types'; //json
 
 
 $route['application_type/all']['get']  = 'levelstypesapplications/get_app_types';

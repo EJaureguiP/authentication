@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class User extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -54,10 +55,10 @@ class User extends CI_Controller {
 		$data = array(
 			'level_name' => $this->input->post('level_name'),
 			'level_value' => $this->input->post('level_value'),
-			
+
 		);
 
-		$this->db->where('level_id', $this->input->post('level_id') );
+		$this->db->where('level_id', $this->input->post('level_id'));
 		$this->db->update('levels', $data);
 
 		$response['result'] = 'ok';
@@ -67,10 +68,57 @@ class User extends CI_Controller {
 
 	public function delete()
 	{
-		$this->db->where('level_id', $this->input->post('level_id') );
+		$this->db->where('level_id', $this->input->post('level_id'));
 		$this->db->delete('levels');
 		$response['result'] = 'ok';
 		echo json_encode($response);
 	}
 
+
+	public function get_permissions()
+	{
+		$user_id = $this->input->get('user_id');
+		$app_id = $this->input->get('app_id');
+
+		$this->db->select('user_permission.user_permission_id, user_permission.user_id, user_permission.app_id, apps.app_name, user_permission.app_level_id, user_permission.app_type_id');
+		$this->db->from('user_permission');
+		$this->db->join('apps', 'user_permission.app_id = user_permission.app_id', 'right');
+
+		if (isset($user_id) && isset($app_id)) {
+			$this->db->where('user_id', $user_id);
+			$this->db->where('app_id', $app_id);
+		}
+
+		$query = $this->db->get();
+		$data = $query->result_array();
+
+		echo json_encode($data);
+	}
+
+
+	public function get_apps_levels()
+	{
+		//$app_id = $this->input->get('app_id');
+
+		$this->db->select('apps_levels.*, levels.level_name, levels.level_value');
+		$this->db->from('apps_levels');
+		$this->db->join('levels', 'apps_levels.level_id = levels.level_id', 'inner');
+		//$this->db->where('apps_levels.app_id', $app_id);
+		$query = $this->db->get();
+		$data = $query->result_array();
+		echo json_encode($data);
+	}
+
+	public function get_apps_types()
+	{
+		//$app_id = $this->input->get('app_id');
+
+		$this->db->select('apps_types.*, types.type_name, types.type_value');
+		$this->db->from('apps_types');
+		$this->db->join('types', 'apps_types.type_id = types.type_id', 'inner');
+		//$this->db->where('apps_types.app_id', $app_id);
+		$query = $this->db->get();
+		$data = $query->result_array();
+		echo json_encode($data);
+	}
 }

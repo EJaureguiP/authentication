@@ -1,15 +1,17 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
 
 
-    public function index(){
-        $this->load->view('dashboard/dashboard');
-    }
+	public function index()
+	{
+		$this->load->view('dashboard/dashboard');
+	}
 
 	public function apps()
 	{
@@ -46,4 +48,21 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/users', $data);
 	}
 
+	public function user_create()
+	{
+		$this->db->select('user_permission.user_permission_id, user_permission.user_id, user_permission.app_id, apps.app_name, user_permission.app_level_id, user_permission.app_type_id');
+		$this->db->from('user_permission');
+		$this->db->join('apps', 'user_permission.app_id = user_permission.app_id', 'right');
+		$query = $this->db->get();
+
+		$data['user_permissions'] = $query->result_array();
+		$data['departments'] = $this->db->get('departments')->result_array();
+
+		$this->load->view('dashboard/user', $data);
+	}
+
+	public function user_create_save()
+	{
+		//$this->load->view('dashboard/user');
+	}
 }

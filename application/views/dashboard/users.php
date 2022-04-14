@@ -32,70 +32,75 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    ?>
 
     
-    <
+    
 
     <div class="row">
-    <div class="col">
-        <div class="card">
-        <div class="card-header row">
-            <div class="col"><h5>Levels</h5></div>
-            <div class="col-auto"><button class="btn btn-primary btn-sm rounded-0 form-inline text-end" type="button" ng-click="delete(level)">Nuevo</button></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                    <div class="col">
+                        <h5>Levels</h5>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-primary btn-sm rounded-0 form-inline text-end"  href="<?php echo base_url(); ?>index.php/dashboard/user/create" >Nuevo</a>
+                    </div>   
+                    </div>
+                 
+                </div>
             
-            
-        </div>
-        <div class="card-body">
-            
-        
-            <table id="table-levels" class="table display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Lastname</th>
-                    <th>Martech #</th>
-                    <th>Department</th>
-                    <th>Phone</th>
-                    <th>Active</th>
-                    <th>Admin</th>
-                    <th>Actions</th>
+            <div class="card-body">
+                <table id="table-levels" class="table display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Lastname</th>
+                        <th>Martech #</th>
+                        <th>Department</th>
+                        <th>Phone</th>
+                        <th>Active</th>
+                        <th>Admin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                <tr ng-repeat="user in users"   >
+                    <td >{{user.user_email }}</td>
+                    <td >{{user.user_name}}</td>
+                    <td >{{user.user_lastname}}</td>
+                    <td >{{user.user_marterch_number}}</td>
+                    <td >{{user.user_department}}</td>
+                    <td >{{user.user_phone}}</td>
+                    <td >{{ user.user_active }}</td>
+                    <td >{{user.user_is_admin}}</td>
+
+                    <td>
+                    <!-- Call to action buttons -->
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-info btn-sm rounded-0 form-inline" type="button" ng-click="delete(level)">Edit</button>
+                    <button class="btn btn-danger btn-sm rounded-0 form-inline" type="button" ng-click="delete(level)">Del</button>
+                    </div>
+                    </td>
                 </tr>
-            </thead>
-
-            <tbody>
-
-            <tr ng-repeat="user in users"   >
-                <td >{{user.user_email }}</td>
-                <td >{{user.user_name}}</td>
-                <td >{{user.user_lastname}}</td>
-                <td >{{user.user_marterch_number}}</td>
-                <td >{{user.user_department}}</td>
-                <td >{{user.user_phone}}</td>
-                <td >{{ user.user_active }}</td>
-                <td >{{user.user_is_admin}}</td>
-
-                <td>
-                <!-- Call to action buttons -->
-                <div class="btn-group" role="group" aria-label="Basic example">
-                <button class="btn btn-info btn-sm rounded-0 form-inline" type="button" ng-click="delete(level)">Edit</button>
-                 <button class="btn btn-danger btn-sm rounded-0 form-inline" type="button" ng-click="delete(level)">Del</button>
-                 </div>
-                </td>
-            </tr>
 
 
-            </tbody>
+                </tbody>
 
 
-            </table>
+                </table>
 
-        </div> <!-- card-body -->
+            </div> <!-- card-body -->
 
 
-        </div> <!-- card -->
-    
-    </div> <!-- col -->
+            </div> <!-- card -->
+        
+        </div> <!-- col -->
 
     </div> <!-- row -->
+
 
     </div> <!-- container -->
 
