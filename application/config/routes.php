@@ -61,8 +61,8 @@ $route['dashboard/types']['get'] = 'dashboard/types';
 $route['dashboard/users']['get'] = 'dashboard/users';
 
 
-
 $route['dashboard/user/create']['get'] = 'dashboard/user_create';
+$route['dashboard/user/update']['get'] = 'dashboard/user_update';
 $route['dashboard/user/create']['post'] = 'dashboard/user_create_save';
 
 
@@ -94,10 +94,15 @@ $route['type/delete']['post'] = 'type/delete';
 $route['user/all'] = 'user/get_all';
 $route['user/create']['post'] = 'user/create';
 $route['user/update']['post'] = 'user/update';
+$route['user/save']['post'] = 'user/save';
+
 $route['user/delete']['post'] = 'user/delete';
-$route['user/permissions']['get'] = 'user/get_permissions'; //json
-$route['user/get_apps_levels']['get'] = 'user/get_apps_levels'; //json
+$route['user/departments']['get'] = 'user/get_departments'; //json
+$route['user/domains']['get'] = 'user/get_domains'; //json
+$route['user/get_levels']['get'] = 'user/get_levels'; //json
 $route['user/get_apps_types']['get'] = 'user/get_apps_types'; //json
+$route['user/get_user']['get'] = 'user/get_user'; //json
+$route['user/get_user_data']['get'] = 'user/get_user_data'; //json
 
 
 $route['application_type/all']['get']  = 'levelstypesapplications/get_app_types';

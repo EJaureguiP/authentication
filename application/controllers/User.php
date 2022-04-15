@@ -27,8 +27,10 @@ class User extends CI_Controller
 
 	public function get_all()
 	{
-		$this->db->select('*');
+		$this->db->select('users.*, departments.department_name');
 		$this->db->from('users');
+		$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+
 		echo json_encode($this->db->get()->result());
 	}
 
@@ -66,6 +68,57 @@ class User extends CI_Controller
 		echo json_encode($response);
 	}
 
+
+	public function save()
+	{
+
+		$user_id = $this->input->post('user_id');
+
+		//echo json_encode($this->input->post());
+
+		//if (true) return;
+
+		if ($user_id == '') {
+			//enter
+
+			$data = array(
+				'user_email' => $this->input->post('user_email'),
+				'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
+				'user_name' => $this->input->post('user_name'),
+				'user_lastname' => $this->input->post('user_lastname'),
+				'user_martech_number' => intval($this->input->post('user_martech_number')),
+				'user_phone' => $this->input->post('user_phone'),
+				'user_active' => intval($this->input->post('user_active')),
+				'user_department_id' => intval($this->input->post('user_department_id')),
+				'user_is_admin' => intval($this->input->post('user_is_admin')),
+				'user_level_id' => intval($this->input->post('user_level_id')),
+			);
+
+			$response['data'] = $data;
+			$this->db->insert('users', $data);
+		} else {
+			//update
+			$data = array(
+				'user_email' => $this->input->post('user_email'),
+				'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
+				'user_name' => $this->input->post('user_name'),
+				'user_lastname' => $this->input->post('user_lastname'),
+				'user_martech_number' => intval($this->input->post('user_martech_number')),
+				'user_phone' => $this->input->post('user_phone'),
+				'user_active' => intval($this->input->post('user_active')),
+				'user_department_id' => intval($this->input->post('user_department_id')),
+				'user_is_admin' => intval($this->input->post('user_is_admin')),
+				'user_level_id' => intval($this->input->post('user_level_id')),
+			);
+			$response['data'] = $data;
+			$this->db->where('user_id', $this->input->post('user_id'));
+			$this->db->update('users', $data);
+		}
+
+		$response['result'] = 'ok';
+	}
+
+
 	public function delete()
 	{
 		$this->db->where('level_id', $this->input->post('level_id'));
@@ -75,19 +128,11 @@ class User extends CI_Controller
 	}
 
 
-	public function get_permissions()
+	public function get_departments()
 	{
-		$user_id = $this->input->get('user_id');
-		$app_id = $this->input->get('app_id');
 
-		$this->db->select('user_permission.user_permission_id, user_permission.user_id, user_permission.app_id, apps.app_name, user_permission.app_level_id, user_permission.app_type_id');
-		$this->db->from('user_permission');
-		$this->db->join('apps', 'user_permission.app_id = user_permission.app_id', 'right');
-
-		if (isset($user_id) && isset($app_id)) {
-			$this->db->where('user_id', $user_id);
-			$this->db->where('app_id', $app_id);
-		}
+		$this->db->select('*');
+		$this->db->from('departments');
 
 		$query = $this->db->get();
 		$data = $query->result_array();
@@ -96,14 +141,57 @@ class User extends CI_Controller
 	}
 
 
-	public function get_apps_levels()
+	public function get_domains()
 	{
-		//$app_id = $this->input->get('app_id');
 
-		$this->db->select('apps_levels.*, levels.level_name, levels.level_value');
-		$this->db->from('apps_levels');
-		$this->db->join('levels', 'apps_levels.level_id = levels.level_id', 'inner');
-		//$this->db->where('apps_levels.app_id', $app_id);
+		$this->db->select('*');
+		$this->db->from('domains');
+
+		$query = $this->db->get();
+		$data = $query->result_array();
+
+		echo json_encode($data);
+	}
+
+
+	public function get_user()
+	{
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->where('user_id', $this->input->get('user_id'));
+
+		$query = $this->db->get();
+		$data = $query->result_array();
+
+		echo json_encode($data);
+	}
+
+
+	public function get_user_data()
+	{
+		$this->db->select('*');
+		$this->db->from('departments');
+		$query = $this->db->get();
+		$data['departments'] = $query->result_array();
+
+
+		$this->db->select('*');
+		$this->db->from('domains');
+		$query = $this->db->get();
+		$data['domains'] = $query->result_array();
+
+		$this->db->select('*');
+		$this->db->from('levels');
+		$query = $this->db->get();
+		$data['levels'] = $query->result_array();
+
+		echo json_encode($data);
+	}
+
+	public function get_levels()
+	{
+		$this->db->select('*');
+		$this->db->from('levels');
 		$query = $this->db->get();
 		$data = $query->result_array();
 		echo json_encode($data);

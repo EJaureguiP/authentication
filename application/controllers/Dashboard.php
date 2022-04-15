@@ -50,14 +50,16 @@ class Dashboard extends CI_Controller
 
 	public function user_create()
 	{
-		$this->db->select('user_permission.user_permission_id, user_permission.user_id, user_permission.app_id, apps.app_name, user_permission.app_level_id, user_permission.app_type_id');
-		$this->db->from('user_permission');
-		$this->db->join('apps', 'user_permission.app_id = user_permission.app_id', 'right');
-		$query = $this->db->get();
+		$this->load->view('dashboard/user');
+	}
 
-		$data['user_permissions'] = $query->result_array();
-		$data['departments'] = $this->db->get('departments')->result_array();
+	public function user_update()
+	{
+		//$this->db->select('*');
+		//$this->db->from('users');
+		//$this->db->where('user_id', $this->input->get('user_id'));
 
+		$data['user_id'] = $this->input->get('user_id');
 		$this->load->view('dashboard/user', $data);
 	}
 

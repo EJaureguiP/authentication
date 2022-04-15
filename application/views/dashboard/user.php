@@ -35,14 +35,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $this->load->view('dashboard/shared/top-bar');
         ?>
 
-        <?php
-        echo form_open('user/create');
-        ?>
+
 
         <div>
 
 
-            <h3>Create New User</h3>
+            <h3>
+                <?php
+                if (isset($user_id)) {
+                    echo "Update User";
+                } else {
+                    echo "Create User";
+                }
+                ?>
+
+            </h3>
 
             <div class="card">
                 <div class="card-header">
@@ -54,27 +61,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <div class="row my-2">
                             <div class="col">
-                                <label for="staticEmail">Email</label>
-                                <input type="email" name="user_email" class="form-control" id="staticEmail" value="">
+                                <label for="staticEmail">User name (Email)</label>
+                                <input type="text" ng-model="user.user_email" class="form-control" id="staticEmail" value="">
                             </div>
+
+                            <div class="col">
+                                <label for="staticEmail">Domain</label>
+                                <select ng-model="user.user_domain" ng-options="domain as domain.domain_name for domain in domains track by domain.domain_id" class="form-control"></select>
+                            </div>
+
+
+                        </div>
+                        <div class="row my-2">
+
                             <div class="col">
                                 <label for="staticName">Name</label>
-                                <input type="text" name="user_name" class="form-control" id="staticName" value="">
+                                <input type="text" ng-model="user.user_name" class="form-control" id="staticName" value="">
                             </div>
                             <div class="col">
                                 <label for="staticLastname">Lastname</label>
-                                <input type="text" name="user_lastname" class="form-control" id="staticLastname" value="">
+                                <input type="text" ng-model="user.user_lastname" class="form-control" id="staticLastname" value="">
                             </div>
                         </div>
 
                         <div class="row my-2">
                             <div class="col">
                                 <label for="staticEmail">Password</label>
-                                <input type="email" name="user_password" class="form-control" id="staticEmail" value="">
+                                <input type="password" ng-model="user.user_password" class="form-control" value="">
                             </div>
-                            <div class="col">
+                            <div class=" col">
                                 <label for="staticName">Retype Password</label>
-                                <input type="text" name="user_retype_password" class="form-control" id="staticName" value="">
+                                <input type="password" ng-model="user.user_retype" class="form-control" value="">
                             </div>
                         </div>
 
@@ -84,23 +101,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col">
                                 <label for="staticEmail">Department</label>
 
-                                <select name="user_department_id" class="form-control">
-                                    <option>No selection</option>
-                                    <?php
-                                    foreach ($departments as $dep) {
-                                        echo '<option value="' . $dep['department_id'] . '">' . $dep['department_name'] . '</option>';
-                                    }
-                                    ?>
-                                </select>
+                                <select ng-model="user.user_department" ng-options="dep as dep.department_name for dep in departments track by dep.department_id" class="form-control"></select>
+
+
                             </div>
 
                             <div class="col">
                                 <label for="staticName">Martech Number</label>
-                                <input type="text" class="form-control" name="user_martech_number" id="staticName" value="">
+                                <input type="text" class="form-control" ng-model="user.user_martech_number" id="staticName" value="">
                             </div>
                             <div class="col">
                                 <label for="staticLastname">Phone</label>
-                                <input type="text" class="form-control" id="staticLastname" name="user_phone" value="">
+                                <input type="text" class="form-control" id="staticLastname" ng-model="user.user_phone" value="">
                             </div>
                         </div>
 
@@ -112,16 +124,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="col">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" name="user_active" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" ng-model="user.user_active">
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Active
                                     </label>
                                 </div>
                             </div>
+
+
                             <div class="col">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" name="user_is_admin" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" ng-model="user.user_is_admin">
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Admin
                                     </label>
@@ -143,61 +157,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
                 <div class="card-body">
+                    <div class="container">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <label for="inputPassword6" class="col-form-label">User Level</label>
+                            </div>
+                            <div class="col-auto">
 
+                                <select ng-model="user.user_level" ng-options="level as level.level_name for level in levels track by level.level_id" class="form-control"></select>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">App Name</th>
-                                <th scope="col">User Level</th>
-                                <th scope="col">User Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                <!--
+                                <select class="form-select" aria-label="Default select example">
+                                    <option ng-repeat="level in levels" value="{{level.level_id}}" ng-model="user.user_level_id">{{level.level_name}}</option>
+                                </select>
+                                -->
+                            </div>
 
-                            <tr ng-repeat="user_permission in user_permissions">
-                                <th scope="row">{{user_permission.app_name}}</th>
-
-                                <th scope="row">
-                                    <select class="form-select" aria-label="Default select example">
-
-                                        <option ng-repeat="app_level in apps_levels">{{app_level.level_name}}</option>
-
-
-                                    </select>
-                                </th>
-                                <th scope="row">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option ng-repeat="app_type in apps_types">{{app_type.type_name}}</option>
-                                    </select>
-                                </th>
-                            </tr>
-
-                        </tbody>
-                    </table>
-
-                    <?php
-
-
-
-
-                    ?>
-
+                        </div>
+                    </div>
                 </div>
 
             </div>
 
 
-            <div class="d-grid gap-2 col-3 mx-auto">
+            <div class="d-grid gap-2 col-3 mx-auto my-4">
                 <div class="btn-group">
                     <button class="btn btn-secondary mx-2" type="button">Cancel</button>
-                    <button class="btn btn-primary mx-2" type="submit">Save</button>
+                    <button class="btn btn-primary mx-2" type="submit" ng-click="save()">Save</button>
                 </div>
             </div>
 
         </div>
 
-        </form>
+
 
 
     </div>
@@ -207,42 +199,146 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         app.controller('user-controller', function($scope, $http, $httpParamSerializerJQLike) {
 
-            $scope.user_permissions = [];
+            $scope.domains = [];
+            $scope.departments = [];
+            $scope.levels = [];
+            $scope.user_id = null;
+            /*$scope.user = {
+                user_id: null,
+                user_email: 'Nuevo',
+                user_domain: null,
 
-            $scope.apps_levels = [];
-            $scope.apps_types = [];
+                user_name: null,
+                user_lastname: null,
+                user_department: null,
+                user_password: null,
+                user_retype: null,
+                user_martech_number: null,
+                user_phone: null,
+                user_active: true,
+                user_is_admin: false,
 
-            $scope.init = function() {
+                user_level: null,
+            };*/
+            $scope.user = {};
 
-                $http({
-                    method: 'get',
-                    url: '<?= base_url() ?>index.php/user/permissions'
-                }).then(function successCallback(response) {
-                    $scope.user_permissions = response.data;
-                    console.log('tenemos esto');
-                    console.log($scope.user_permissions);
-                });
-
-
-                $http({
-                    method: 'get',
-                    url: '<?= base_url() ?>index.php/user/get_apps_levels'
-                }).then(function successCallback(response) {
-                    $scope.apps_levels = response.data;
-                    console.log($scope.apps_levels);
-                });
-
-                $http({
-                    method: 'get',
-                    url: '<?= base_url() ?>index.php/user/get_apps_types'
-                }).then(function successCallback(response) {
-                    $scope.apps_types = response.data;
-                    console.log($scope.apps_types);
-                });
-
+            $scope.init = function(user_id = null) {
+                $scope.user_id = user_id;
+                $scope.loadData();
             }
 
-            $scope.init();
+
+            $scope.loadData = function() {
+                $http({
+                    method: 'get',
+                    url: '<?= base_url() ?>index.php/user/get_user_data'
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    $scope.levels = response.data.levels;
+                    $scope.domains = response.data.domains;
+                    $scope.departments = response.data.departments;
+                    $scope.loadUser();
+                });
+            }
+
+
+            $scope.loadUser = function() {
+                if ($scope.user_id != null) {
+                    console.log('Hay que cargar el user_id');
+
+                    $http({
+                        method: 'get',
+                        url: '<?= base_url() ?>index.php/user/get_user?user_id=' + $scope.user_id
+                    }).then(function successCallback(response) {
+                        $scope.user = response.data[0];
+
+                        $email_splitted = $scope.user.user_email.split('@');
+                        $scope.user.user_email = $email_splitted[0];
+
+                        const foundDomain = $scope.domains.filter(domain => domain.domain_name == $email_splitted[1]);
+                        //search domain name
+                        $scope.user.user_domain = foundDomain[0];
+
+                        $scope.user.user_password = '';
+                        $scope.user.user_retype = '';
+
+                        const departmentFound = $scope.departments.filter(dep => dep.department_id == $scope.user.user_department_id);
+                        $scope.user.user_department = departmentFound[0];
+
+                        const LevelFound = $scope.levels.filter(level => level.level_id == $scope.user.user_level_id);
+                        $scope.user.user_level = LevelFound[0];
+
+                        $scope.user.user_active = $scope.user.user_active == 1 ? true : false;
+                        $scope.user.user_is_admin = $scope.user.user_is_admin == 1 ? true : false;
+
+                    });
+
+                }
+            }
+
+            $scope.save = function() {
+
+                if ($scope.user.user_name == undefined || $scope.user.user_lastname == undefined || $scope.user.user_password == undefined || $scope.user.user_department == undefined) {
+
+                    console.log($scope.user);
+                    Swal.fire(
+                        'Could not be done!',
+                        'You need to set user name, lastname, department and password.',
+                        'error'
+                    )
+                    return;
+                }
+
+
+                if (!($scope.user.user_password == $scope.user.user_retype)) {
+                    Swal.fire(
+                        'Could not be done!',
+                        'Both fields of password must be equal.',
+                        'error'
+                    )
+                    return;
+                }
+
+
+                var data = {
+                    user_id: $scope.user.user_id,
+                    user_email: $scope.user.user_email + '@' + $scope.user.user_domain.domain_name,
+                    user_password: $scope.user.user_password,
+                    user_name: $scope.user.user_name,
+                    user_lastname: $scope.user.user_lastname,
+                    user_department_id: parseInt($scope.user.user_department.department_id),
+                    user_martech_number: $scope.user.user_martech_number,
+                    user_phone: $scope.user.user_phone,
+                    user_active: ($scope.user.user_active) ? 1 : 0,
+                    user_is_admin: ($scope.user.user_is_admin) ? 1 : 0,
+                    user_level_id: parseInt($scope.user.user_level.level_id),
+                };
+
+                //console.log(data);
+
+                //if (true) return;
+
+                $http({
+                    url: '<?php echo base_url() ?>index.php/user/save',
+                    method: 'POST',
+                    data: $httpParamSerializerJQLike(data),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    //http://localhost/authentication/index.php/dashboard/users
+
+                    //window.location.href = "http://localhost/authentication/index.php/dashboard/users";
+                });
+            }
+
+
+            $scope.init(
+                <?php
+                if (isset($user_id)) {
+                    echo "'" . $user_id . "'";
+                } ?>);
 
         });
     </script>
