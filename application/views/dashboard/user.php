@@ -87,11 +87,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="row my-2">
                             <div class="col">
                                 <label for="staticEmail">Password</label>
-                                <input type="password" ng-model="user.user_password" class="form-control" value="">
+                                <input type="text" ng-model="user.user_password" class="form-control" value="">
                             </div>
                             <div class=" col">
                                 <label for="staticName">Retype Password</label>
-                                <input type="password" ng-model="user.user_retype" class="form-control" value="">
+                                <input type="text" ng-model="user.user_retype" class="form-control" value="">
                             </div>
                         </div>
 
@@ -182,7 +182,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <div class="d-grid gap-2 col-3 mx-auto my-4">
                 <div class="btn-group">
-                    <button class="btn btn-secondary mx-2" type="button">Cancel</button>
+                    <a class="btn btn-secondary mx-2" href="<?php echo base_url() ?>index.php/dashboard/users">Cancel</a>
                     <button class="btn btn-primary mx-2" type="submit" ng-click="save()">Save</button>
                 </div>
             </div>
@@ -203,23 +203,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $scope.departments = [];
             $scope.levels = [];
             $scope.user_id = null;
-            /*$scope.user = {
-                user_id: null,
-                user_email: 'Nuevo',
-                user_domain: null,
 
-                user_name: null,
-                user_lastname: null,
-                user_department: null,
-                user_password: null,
-                user_retype: null,
-                user_martech_number: null,
-                user_phone: null,
-                user_active: true,
-                user_is_admin: false,
-
-                user_level: null,
-            };*/
             $scope.user = {};
 
             $scope.init = function(user_id = null) {
@@ -329,7 +313,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     console.log(response.data);
                     //http://localhost/authentication/index.php/dashboard/users
 
-                    //window.location.href = "http://localhost/authentication/index.php/dashboard/users";
+                    window.location.href = "http://localhost/authentication/index.php/dashboard/users";
                 });
             }
 

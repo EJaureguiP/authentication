@@ -75,6 +75,7 @@ $route['register']['post'] = 'home/register_save';
 
 $route['login']['get'] = 'home/login';
 $route['login']['post'] = 'home/login_enter';
+$route['logout']['get'] = 'home/logout';
 
 $route['application']['get'] = 'application/index';
 $route['application/all'] = 'application/get_all';
@@ -95,6 +96,7 @@ $route['user/all'] = 'user/get_all';
 $route['user/create']['post'] = 'user/create';
 $route['user/update']['post'] = 'user/update';
 $route['user/save']['post'] = 'user/save';
+$route['user/delete']['post'] = 'user/delete';
 
 $route['user/delete']['post'] = 'user/delete';
 $route['user/departments']['get'] = 'user/get_departments'; //json

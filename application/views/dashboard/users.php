@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <!-- Call to action buttons -->
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a class="btn btn-info btn-sm rounded-0 form-inline" href="<?php echo base_url(); ?>index.php/dashboard/user/update?user_id={{user.user_id }}" type="button">Edit</a>
-                                            <button class="btn btn-danger btn-sm rounded-0 form-inline" type="button" ng-click="delete(level)">Del</button>
+                                            <button class="btn btn-danger btn-sm rounded-0 form-inline" type="button" ng-click="delete(user)">Del</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -128,6 +128,45 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     $scope.users = response.data;
 
                 });
+            }
+
+
+            $scope.delete = function(user) {
+                console.log(user);
+                //user.user_id
+
+                Swal.fire({
+                    title: 'Do you want to delete ' + user.user_email + '?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        var data = {
+                            user_id: user.user_id,
+                        };
+
+                        $http({
+                            url: '<?php echo base_url() ?>index.php/user/delete',
+                            method: 'POST',
+                            data: $httpParamSerializerJQLike(data),
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        }).then(function successCallback(response) {
+                            console.log(response.data);
+                            //http://localhost/authentication/index.php/dashboard/users
+                            window.location.href = "http://localhost/authentication/index.php/dashboard/users";
+                        });
+
+                    }
+                })
+
             }
 
             $scope.init();

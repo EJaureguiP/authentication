@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once './vendor/paragonie/sodium_compat/autoload.php';
 require_once './vendor/firebase/php-jwt/src/JWT.php';
@@ -10,7 +10,8 @@ use Firebase\JWT\JWT;
 //use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class Home extends CI_Controller {
+class Home extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -29,11 +30,9 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		if( $this->session->user_email != null &&  $this->session->user_active == 1 &&  $this->session->user_is_admin == 1  )
-		{
+		if ($this->session->user_email != null &&  $this->session->user_active == 1 &&  $this->session->user_is_admin == 1) {
 			redirect('dashboard', 'refresh');
-		} else
-		{
+		} else {
 			$this->load->view('home');
 		}
 	}
@@ -47,7 +46,7 @@ class Home extends CI_Controller {
 	{
 		//Load model
 		$this->load->model('domain');
-		$data['domains'] =	$this->domain->get_entries();	
+		$data['domains'] =	$this->domain->get_entries();
 		//echo json_encode($data);
 		$this->load->view('register', $data);
 	}
@@ -59,8 +58,11 @@ class Home extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('user_email', 'Email', 'required');
-		$this->form_validation->set_rules('user_password', 'Password', 'required',
-				array('required' => 'You must provide a %s.')
+		$this->form_validation->set_rules(
+			'user_password',
+			'Password',
+			'required',
+			array('required' => 'You must provide a %s.')
 		);
 		$this->form_validation->set_rules('user_name', 'Name', 'required');
 		$this->form_validation->set_rules('user_lastname', 'Lastname', 'required');
@@ -75,17 +77,15 @@ class Home extends CI_Controller {
 		$data['user_name'] = $this->input->post('user_name');
 		$data['user_lastname'] = $this->input->post('user_lastname');
 		$data['user_email'] = $email . '@' . $domain;
-		
+
 		$this->form_validation->set_data($data);
 
 		//echo json_encode($data);
 
-		if ($this->form_validation->run() == FALSE)
-        {
-			$data['domains'] =	$this->domain->get_entries();	
-        	$this->load->view('register', $data);
-        } else
-		{
+		if ($this->form_validation->run() == FALSE) {
+			$data['domains'] =	$this->domain->get_entries();
+			$this->load->view('register', $data);
+		} else {
 			$this->user->insert($data);
 		}
 	}
@@ -94,11 +94,18 @@ class Home extends CI_Controller {
 	{
 		//Load model
 		$this->load->model('domain');
-		$data['domains'] =	$this->domain->get_entries();	
+		$data['domains'] =	$this->domain->get_entries();
 		//echo json_encode($data);
 		$this->load->view('login', $data);
 	}
 
+
+	public function logout()
+	{
+		$array_items = array('user_email', 'user_name', 'user_lastname', 'user_martech_number', 'user_active', 'user_is_admin');
+		$this->session->unset_userdata($array_items);
+		redirect('/', 'refresh');
+	}
 
 	public function login_enter()
 	{
@@ -110,16 +117,17 @@ class Home extends CI_Controller {
 
 		$this->form_validation->set_rules('user', 'User', 'required');
 		$this->form_validation->set_rules('domain', 'Domain', 'required');
-		$this->form_validation->set_rules('user_password', 'Password', 'required',
-				array('required' => 'You must provide a %s.')
+		$this->form_validation->set_rules(
+			'user_password',
+			'Password',
+			'required',
+			array('required' => 'You must provide a %s.')
 		);
-				
-		if ($this->form_validation->run() == FALSE)
-        {
-			$data['domains'] =	$this->domain->get_entries();	
-        	$this->load->view('login', $data);
-        } else
-		{
+
+		if ($this->form_validation->run() == FALSE) {
+			$data['domains'] =	$this->domain->get_entries();
+			$this->load->view('login', $data);
+		} else {
 			//$this->user->insert($data);
 			$username = $this->input->post('user') . '@' . $this->input->post('domain');
 			$password = $this->input->post('user_password');
@@ -129,19 +137,17 @@ class Home extends CI_Controller {
 			$this->db->where('user_email', $username);
 			$result = $this->db->get()->result_array();
 
-			if(count($result) == 0)
-			{
+			if (count($result) == 0) {
 				echo 'user not found';
 				return;
-			} else
-			{
+			} else {
 				$hashed_password = $result[0]['user_password'];
 				//echo $hashed_password;
-				if(password_verify($password, $hashed_password)) {
-					
+				if (password_verify($password, $hashed_password)) {
+
 					$data = $result[0];
 
-					$user_date = array (
+					$user_date = array(
 						'user_email' => $data['user_email'],
 						'user_name' => $data['user_name'],
 						'user_lastname' => $data['user_lastname'],
@@ -149,7 +155,7 @@ class Home extends CI_Controller {
 						'user_active' => $data['user_active'],
 						'user_is_admin' => $data['user_is_admin'],
 					);
-					
+
 					$this->session->set_userdata($user_date);
 					redirect('/', 'refresh');
 
@@ -171,18 +177,11 @@ class Home extends CI_Controller {
 					
 					echo json_encode($decoded);	
 					*/
-
-				} else
-				{
+				} else {
 					echo 'Password is incorrect';
 					return;
 				}
 			}
-
-
 		}
-
 	}
-
-
 }

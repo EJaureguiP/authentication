@@ -1,5 +1,5 @@
 <ul class="nav justify-content-end nav-pills">
-  
+
   <li class="nav-item">
     <a class="nav-link " aria-current="page" href="<?php echo base_url() ?>index.php/dashboard/apps">Apps</a>
   </li>
@@ -11,13 +11,15 @@
 
 
   <li class="nav-item dropdown">
-  
+
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Permissions</a>
-    
+
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="<?php echo base_url() ?>index.php/dashboard/levels">Levels</a></li>
       <li><a class="dropdown-item" href="<?php echo base_url() ?>index.php/dashboard/types">Types</a></li>
-      <li><hr class="dropdown-divider"></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
       <li><a class="dropdown-item" href="<?php echo base_url() ?>index.php/dashboard/permissions">App Permissions</a></li>
     </ul>
 
@@ -27,13 +29,15 @@
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Profile</a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="#">Edit</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">Logout</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="<?php echo base_url() ?>index.php/logout">Logout</a></li>
     </ul>
   </li>
 
 
-<!--
+  <!--
   <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="#">Active</a>
   </li>

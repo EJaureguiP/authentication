@@ -121,8 +121,8 @@ class User extends CI_Controller
 
 	public function delete()
 	{
-		$this->db->where('level_id', $this->input->post('level_id'));
-		$this->db->delete('levels');
+		$this->db->where('user_id', $this->input->post('user_id'));
+		$this->db->delete('users');
 		$response['result'] = 'ok';
 		echo json_encode($response);
 	}
