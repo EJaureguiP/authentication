@@ -94,6 +94,8 @@ class Home extends CI_Controller
 	{
 		//Load model
 		$this->load->model('domain');
+		$from = $this->input->get('from');
+		$data['from'] = $from;
 		$data['domains'] =	$this->domain->get_entries();
 		//echo json_encode($data);
 		$this->load->view('login', $data);
@@ -131,14 +133,24 @@ class Home extends CI_Controller
 			//$this->user->insert($data);
 			$username = $this->input->post('user') . '@' . $this->input->post('domain');
 			$password = $this->input->post('user_password');
+			$from = $this->input->post('from');
 
-			$this->db->select('*');
+			$this->db->select('users.*, levels.level_name, levels.level_value');
 			$this->db->from('users');
+			$this->db->join('levels', 'users.user_level_id = levels.level_id', 'inner');
 			$this->db->where('user_email', $username);
 			$result = $this->db->get()->result_array();
 
 			if (count($result) == 0) {
-				echo 'user not found';
+				//echo 'user not found';
+
+				$this->load->model('domain');
+				$from = $this->input->get('from');
+				$data['from'] = $from;
+				$data['domains'] =	$this->domain->get_entries();
+				$data['error'] =	'The user was not found. Verify your user and password.';
+				$this->load->view('login', $data);
+
 				return;
 			} else {
 				$hashed_password = $result[0]['user_password'];
@@ -156,29 +168,29 @@ class Home extends CI_Controller
 						'user_is_admin' => $data['user_is_admin'],
 					);
 
-					$this->session->set_userdata($user_date);
-					redirect('/', 'refresh');
-
-					/*
-					//SUCCESS
-					$issued_at = new DateTime();
-					$issued = $issued_at->getTimestamp();
-					$expire = $issued_at->modify('+1 day')->getTimestamp();
-		
-					//use JWT with JWT_KEY
-					$authentication = array(
-						"iat" => $issued,
-						'exp'  => $expire,
-						'user'  => $username,
-					);
-					
-					$jwt = JWT::encode($authentication, JWT_KEY, 'HS256');
-					$decoded = JWT::decode($jwt, new Key(JWT_KEY, 'HS256'));
-					
-					echo json_encode($decoded);	
-					*/
+					if ($from) {
+						$url = $from . '/login?';
+						$url .= 'user_email=' . $data['user_email'];
+						$url .= '&user_name=' . $data['user_name'];
+						$url .= '&user_lastname=' . $data['user_lastname'];
+						$url .= '&user_martech_number=' . $data['user_martech_number'];
+						$url .= '&user_active=' . $data['user_active'];
+						$url .= '&user_is_admin=' . $data['user_is_admin'];
+						$url .= '&user_level_name=' . $data['level_name'];
+						$url .= '&user_level_value=' . $data['level_value'];
+						$url .= '&from=' . $from;
+						redirect($url);
+					} else {
+						$this->session->set_userdata($user_date);
+						redirect('/', 'refresh');
+					}
 				} else {
-					echo 'Password is incorrect';
+					$this->load->model('domain');
+					$from = $this->input->get('from');
+					$data['from'] = $from;
+					$data['domains'] =	$this->domain->get_entries();
+					$data['error'] =	'Password is incorrect. Verify your password.';
+					$this->load->view('login', $data);
 					return;
 				}
 			}
