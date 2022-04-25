@@ -107,6 +107,10 @@ $route['user/get_user']['get'] = 'user/get_user'; //json
 $route['user/get_user_data']['get'] = 'user/get_user_data'; //json
 
 
+$route['user/get_users_data']['get'] = 'user/get_users_data'; //json
+
+
+
 $route['application_type/all']['get']  = 'levelstypesapplications/get_app_types';
 $route['application_type/add']['post'] = 'levelstypesapplications/add_app_type';
 $route['application_type/remove']['post'] = 'levelstypesapplications/remove_app_type';
