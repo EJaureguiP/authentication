@@ -94,27 +94,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </form>
                 </div>
 
-
-                <div class="col-md-12"><label class="form-label" for="inputUserPassword">Password</label>
-                    <input class="form-control" id="inputUserPassword" type="password" name="user_password">
-                </div>
-
-                <input name="from" hidden type="text" value="<?= $from ?>">
-
-
-                <div class="btn-group mt-3">
-
-                    <?php
-                    if (!$from) {
-                        echo '<a class="btn btn-secondary" href="' . base_url() . 'index.php" >CANCEL</a>';
-                    }
-                    ?>
-
-                    <button class="btn btn-primary " type="submit">LOGIN</button>
-
-                </div>
-
-
                 </form>
             </div>
         </div>
