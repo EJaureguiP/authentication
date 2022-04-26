@@ -188,6 +188,34 @@ class User extends CI_Controller
 		echo json_encode($data);
 	}
 
+
+	public function get_users_data()
+	{
+		//bring all data fr
+		$department_name = $this->input->get('department_name');
+		$level_name = $this->input->get('level_name');
+
+		//$this->db->select('*');
+		$this->db->select('users.user_id, users.user_email, users.user_name, users.user_lastname, users.user_martech_number ,users.user_active, users.user_level_id, levels.level_name, users.user_department_id, departments.department_name');
+		$this->db->from('users');
+		$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+		$this->db->join('levels', 'users.user_level_id = levels.level_id', 'inner');
+
+		if ($department_name != null)
+			$this->db->where('departments.department_name', $department_name);
+
+		if ($level_name != null)
+			$this->db->where('levels.level_name', $level_name);
+
+		$query = $this->db->get();
+		$data['users'] = $query->result_array();
+		echo json_encode($data);
+	}
+
+
+
+
+
 	public function get_levels()
 	{
 		$this->db->select('*');
