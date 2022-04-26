@@ -15,11 +15,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <title>Authentication</title>
   </head>
+  <style>
+    body {
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background: #014a8f;
+        /* Old browsers */
+        background: -moz-linear-gradient(top, #014a8f 0%, #0082b2 100%);
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #014a8f 0%, #0082b2 100%);
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #014a8f 0%, #0082b2 100%);
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#014a8f', endColorstr='#0082b2', GradientType=0);
+        /* IE6-9 */
+    }
+</style>
   <body>
 
   <div class="container px-0">
      
-     <nav class="navbar navbar-light navbar-top navbar-expand">
+     <nav class="navbar navbar-dark navbar-top navbar-expand">
        <div class="collapse navbar-collapse">
          <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
            <li class="nav-item"><a class="nav-link active" aria-current="page" id="navbarDropdownNotification" href="<?php echo base_url() ?>index.php/home/login" >INGRESAR</a></li>

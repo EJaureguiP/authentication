@@ -26,21 +26,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <title>Authentication</title>
 </head>
-
+<style>
+    body {
+        height: 100vh;
+        background: #014a8f;
+        /* Old browsers */
+        background: -moz-linear-gradient(top, #014a8f 0%, #0082b2 100%);
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #014a8f 0%, #0082b2 100%);
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #014a8f 0%, #0082b2 100%);
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#014a8f', endColorstr='#0082b2', GradientType=0);
+        /* IE6-9 */
+    }
+</style>
 <body>
-
     <div class="container px-0" ng-app="app-user" ng-controller="user-controller">
-
-        <?php
+      <?php
         $this->load->view('dashboard/shared/top-bar');
         ?>
-
-
-
         <div>
-
-
-            <h3>
+            <h3 class="text-light">
                 <?php
                 if (isset($user_id)) {
                     echo "Update User";
@@ -55,7 +62,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="card-header">
                     User Info
                 </div>
-
                 <div class="card-body">
                     <form class="row ">
 
@@ -141,17 +147,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </label>
                                 </div>
                             </div>
-
-
                         </div>
-
                     </form>
                 </div>
-
             </div>
-
-
-            <div class="card">
+            <div class="card my-2">
                 <div class="card-header">
                     Apps Permissions
                 </div>
@@ -172,18 +172,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </select>
                                 -->
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
             <div class="d-grid gap-2 col-3 mx-auto my-4">
                 <div class="btn-group">
-                    <a class="btn btn-secondary mx-2" href="<?php echo base_url() ?>index.php/dashboard/users">Cancel</a>
-                    <button class="btn btn-primary mx-2" type="submit" ng-click="save()">Save</button>
+                    <a class="btn btn-secondary" href="<?php echo base_url() ?>index.php/dashboard/users">Cancel</a>
+                    <button class="btn btn-danger" type="submit" ng-click="save()">Save</button>
                 </div>
             </div>
 
