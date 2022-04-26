@@ -143,14 +143,12 @@ class Home extends CI_Controller
 
 			if (count($result) == 0) {
 				//echo 'user not found';
-
 				$this->load->model('domain');
 				$from = $this->input->get('from');
 				$data['from'] = $from;
 				$data['domains'] =	$this->domain->get_entries();
 				$data['error'] =	'The user was not found. Verify your user and password.';
 				$this->load->view('login', $data);
-
 				return;
 			} else {
 				$hashed_password = $result[0]['user_password'];

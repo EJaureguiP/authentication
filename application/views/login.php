@@ -44,7 +44,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p class="mb-0 mt-2 text-800">Provide your email and password</p>
                 </div>
                 <div class="card-body p-0">
-                    <form class="row g-3 m-3" method="post" action="<?php echo base_url() ?>index.php/login">
+                    <form class="row g-3 m-3" method="post" action="
+                        <?php
+                        $url = base_url() . 'index.php/login';
+
+                        if (isset($from)) {
+                            $url .= '?from=' . $from;
+                        }
+
+                        echo $url;
+                        ?>">
 
                         <?php echo validation_errors('<div class="error">', '</div>'); ?>
 
@@ -85,7 +94,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <?php
                             if (!$from) {
-                                echo '<button class="btn btn-secondary mb-3">CANCEL</button>';
+                                echo '<a class="btn btn-secondary mb-3" href="' . base_url() . 'index.php">CANCEL</a>';
                             }
                             ?>
 
