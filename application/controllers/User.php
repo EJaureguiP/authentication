@@ -30,8 +30,29 @@ class User extends CI_Controller
 		$this->db->select('users.*, departments.department_name');
 		$this->db->from('users');
 		$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+		$data['users'] = $this->db->get()->result();
 
-		echo json_encode($this->db->get()->result());
+		$this->db->select('*');
+		$this->db->from('departments');
+		$this->db->order_by('department_name', 'ASC');
+		$query = $this->db->get();
+		$data['departments'] = $query->result();
+
+
+		$this->db->select('*');
+		$this->db->from('plants');
+		//$this->db->order_by('department_name', 'ASC');
+		$query = $this->db->get();
+		$data['plants'] = $query->result();
+
+
+		$this->db->select('*');
+		$this->db->from('shifts');
+		//$this->db->order_by('shift_name', 'ASC');
+		$query = $this->db->get();
+		$data['shifts'] = $query->result();
+
+		echo json_encode($data);
 	}
 
 
@@ -53,11 +74,9 @@ class User extends CI_Controller
 
 	public function update()
 	{
-
 		$data = array(
 			'level_name' => $this->input->post('level_name'),
 			'level_value' => $this->input->post('level_value'),
-
 		);
 
 		$this->db->where('level_id', $this->input->post('level_id'));
@@ -74,48 +93,61 @@ class User extends CI_Controller
 
 		$user_id = $this->input->post('user_id');
 
-		//echo json_encode($this->input->post());
+		$data = array(
+			'user_email' => $this->input->post('user_email'),
+			'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
+			'user_name' => $this->input->post('user_name'),
+			'user_lastname' => $this->input->post('user_lastname'),
+			'user_martech_number' => intval($this->input->post('user_martech_number')),
+			'user_phone' => $this->input->post('user_phone'),
+			'user_active' => intval($this->input->post('user_active')),
+			'user_department_id' => intval($this->input->post('user_department_id')),
+			'user_is_admin' => intval($this->input->post('user_is_admin')),
+			'user_level_id' => intval($this->input->post('user_level_id')),
+		);
 
-		//if (true) return;
+		$plant_id = $this->input->post('user_plant_id');
+		if ($plant_id != null) $data['user_plant_id'] = intval($plant_id);
+
+		$shift_id = $this->input->post('user_shift_id');
+		if ($shift_id != null)  $data['user_shift_id'] = intval($shift_id);
+
 
 		if ($user_id == '') {
 			//enter
-
-			$data = array(
-				'user_email' => $this->input->post('user_email'),
-				'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
-				'user_name' => $this->input->post('user_name'),
-				'user_lastname' => $this->input->post('user_lastname'),
-				'user_martech_number' => intval($this->input->post('user_martech_number')),
-				'user_phone' => $this->input->post('user_phone'),
-				'user_active' => intval($this->input->post('user_active')),
-				'user_department_id' => intval($this->input->post('user_department_id')),
-				'user_is_admin' => intval($this->input->post('user_is_admin')),
-				'user_level_id' => intval($this->input->post('user_level_id')),
-			);
-
 			$response['data'] = $data;
-			$this->db->insert('users', $data);
+
+
+			$email = $this->input->post('user_email');
+
+			$this->db->select('user_email');
+			$this->db->where('user_email', $email);
+			$query = $this->db->get('users');
+			$num = $query->num_rows();
+
+			if ($num > 0) {
+				$response['result'] = 'fail';
+				$response['error'] = 'There is already an Email';
+			} else 
+			if ($this->db->insert('users', $data)) {
+				$response['result'] = 'ok';
+			} else {
+				$response['result'] = 'fail';
+				$response['error'] = $this->db->error();
+			}
 		} else {
 			//update
-			$data = array(
-				'user_email' => $this->input->post('user_email'),
-				'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
-				'user_name' => $this->input->post('user_name'),
-				'user_lastname' => $this->input->post('user_lastname'),
-				'user_martech_number' => intval($this->input->post('user_martech_number')),
-				'user_phone' => $this->input->post('user_phone'),
-				'user_active' => intval($this->input->post('user_active')),
-				'user_department_id' => intval($this->input->post('user_department_id')),
-				'user_is_admin' => intval($this->input->post('user_is_admin')),
-				'user_level_id' => intval($this->input->post('user_level_id')),
-			);
 			$response['data'] = $data;
 			$this->db->where('user_id', $this->input->post('user_id'));
-			$this->db->update('users', $data);
-		}
 
-		$response['result'] = 'ok';
+			if ($this->db->update('users', $data)) {
+				$response['result'] = 'ok';
+			} else {
+				$response['result'] = 'fail';
+				$response['error'] = $this->db->error();
+			}
+		}
+		echo json_encode($response);
 	}
 
 
@@ -184,6 +216,18 @@ class User extends CI_Controller
 		$this->db->from('levels');
 		$query = $this->db->get();
 		$data['levels'] = $query->result_array();
+
+
+		$this->db->select('*');
+		$this->db->from('plants');
+		$query = $this->db->get();
+		$data['plants'] = $query->result_array();
+
+		$this->db->select('*');
+		$this->db->from('shifts');
+		$query = $this->db->get();
+		$data['shifts'] = $query->result_array();
+
 
 		echo json_encode($data);
 	}
