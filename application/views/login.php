@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico">
     <!-- Bootstrap CSS -->
-    <link href="<?= base_url() ?>vendor/bootstrap-5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>includes/bootstrap-5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <title>Authentication</title>
 </head>
@@ -109,7 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     </div>
 
-    <script src="<?= base_url() ?>vendor/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>includes/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

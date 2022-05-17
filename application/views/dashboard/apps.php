@@ -10,11 +10,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="<?= base_url() ?>vendor/bootstrap-5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>includes/bootstrap-5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
 
-    <script src="<?= base_url() ?>/vendor/angular-1.8.2/angular.min.js"></script>
+    <script src="<?= base_url() ?>includes/angular-1.8.2/angular.min.js"></script>
 
     <title>Authentication</title>
 </head>
@@ -376,7 +376,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Optional JavaScript; choose one of the two! -->
 
-    <script src="<?= base_url() ?>vendor/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>includes/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
