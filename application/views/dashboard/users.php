@@ -61,8 +61,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <div class="card-body">
                         <div class="container">
-                            <table id="table-levels" class="table">
-                                <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table id="table-levels" class="table">
                                     <thead>
                                         <tr>
                                             <th>Email</th>
@@ -100,10 +100,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                                     </tbody>
+                                </table>
+                            </div>
 
-                                </div>
-
-                            </table>
                         </div>
 
 
