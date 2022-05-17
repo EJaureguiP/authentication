@@ -168,8 +168,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             }
                         }).then(function successCallback(response) {
                             console.log(response.data);
-                            //http://localhost/authentication/index.php/dashboard/users
-                            window.location.href = "http://localhost/authentication/index.php/dashboard/users";
+                            window.location.href = "<?php echo SERVER_PATH_URL; ?>authentication/index.php/dashboard/users";
                         });
 
                     }

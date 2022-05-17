@@ -41,9 +41,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         /* IE6-9 */
     }
 </style>
+
 <body>
     <div class="container px-0" ng-app="app-user" ng-controller="user-controller">
-      <?php
+        <?php
         $this->load->view('dashboard/shared/top-bar');
         ?>
         <div>
@@ -307,9 +308,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     }
                 }).then(function successCallback(response) {
                     console.log(response.data);
-                    //http://localhost/authentication/index.php/dashboard/users
-
-                    window.location.href = "http://localhost/authentication/index.php/dashboard/users";
+                    window.location.href = "<?php echo SERVER_PATH_URL; ?>authentication/index.php/dashboard/users";
                 });
             }
 
