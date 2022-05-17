@@ -19,7 +19,7 @@
   <link href="<?php echo base_url() ?>/vendor/public/assets/css/phoenix.min.css" rel="stylesheet" id="style-default">
   <link href="<?php echo base_url() ?>/vendor/public/assets/css/user.min.css" rel="stylesheet" id="user-style-default">
 
-  <script src="<?= base_url() ?>includes/sweetalert2/sweetalert2.all.min.js"></script>
+  <script src="<?= base_url() ?>assets/sweetalert2/sweetalert2.all.min.js"></script>
 
   <style>
     body {
