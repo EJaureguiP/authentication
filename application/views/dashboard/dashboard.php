@@ -42,15 +42,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row py-5">
                 <div class="card col-6 m-auto d-block">
                     <div class="row p-5">
-                        <div class="col-md-6 text-center">
+                        <!--<div class="col-md-6 text-center">
                             <a href="<?php echo base_url() ?>index.php/dashboard/apps" class="text-decoration-none text-dark">
                                 <div class="card">
                                     <img style="width:4rem;  display: block; margin: auto;  margin-top: 3rem; margin-bottom: 3rem;" src="<?php echo base_url() ?>/assets/img/list.png" alt="List">
                                     <h5 style="margin-bottom: 3rem;">Applications</h5>
                                 </div>
                             </a>
-                        </div>
-                        <div class="col-md-6 text-center">
+                        </div>-->
+                        <div class="col-md-12 text-center">
                             <a href="<?php echo base_url() ?>index.php/dashboard/users" class="text-decoration-none text-dark">
                                 <div class="card">
                                     <img style="width:4rem;  display: block; margin: auto;  margin-top: 3rem; margin-bottom: 3rem;" src="<?php echo base_url() ?>/assets/img/connection.png" alt="List">

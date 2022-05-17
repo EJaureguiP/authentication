@@ -172,10 +172,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <script>
         //set datatable init
-        $(document).ready(function() {
-            $('#table-apps-levels').DataTable();
-            $('#table-apps-types').DataTable();
-        });
+        //$(document).ready(function() {
+        //    $('#table-apps-levels').DataTable();
+        //    $('#table-apps-types').DataTable();
+        //});
 
 
 

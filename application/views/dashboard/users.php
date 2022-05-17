@@ -60,47 +60,48 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <div class="card-body">
-
                         <div class="container">
-                            <table id="table-levels" class="table table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th>Name</th>
-                                        <th>Lastname</th>
-                                        <th>Martech #</th>
-                                        <th>Department</th>
-                                        <th>Phone</th>
-                                        <th>Active</th>
-                                        <th>Admin</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
+                            <table id="table-levels" class="table">
+                                <div class="table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Name</th>
+                                            <th>Lastname</th>
+                                            <th>Martech #</th>
+                                            <th>Department</th>
+                                            <th>Phone</th>
+                                            <th>Active</th>
+                                            <th>Admin</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
+                                    <tbody>
 
-                                    <tr ng-repeat="user in users">
-                                        <td>{{user.user_email }}</td>
-                                        <td>{{user.user_name}}</td>
-                                        <td>{{user.user_lastname}}</td>
-                                        <td>{{user.user_marterch_number}}</td>
-                                        <td>{{user.department_name}}</td>
-                                        <td>{{user.user_phone}}</td>
-                                        <td>{{ (user.user_active == 1) ? 'True' : 'False'  }}</td>
-                                        <td>{{ (user.user_is_admin == 1) ? 'True' : 'False' }}</td>
+                                        <tr ng-repeat="user in users">
+                                            <td>{{user.user_email }}</td>
+                                            <td>{{user.user_name}}</td>
+                                            <td>{{user.user_lastname}}</td>
+                                            <td>{{user.user_marterch_number}}</td>
+                                            <td>{{user.department_name}}</td>
+                                            <td>{{user.user_phone}}</td>
+                                            <td>{{ (user.user_active == 1) ? 'True' : 'False'  }}</td>
+                                            <td>{{ (user.user_is_admin == 1) ? 'True' : 'False' }}</td>
 
-                                        <td>
-                                            <!-- Call to action buttons -->
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a class="btn btn-secondary" href="<?php echo base_url(); ?>index.php/dashboard/user/update?user_id={{user.user_id }}" type="button"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                <button class="btn btn-danger" type="button" ng-click="delete(user)"><i class="fa-solid fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                <!-- Call to action buttons -->
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>index.php/dashboard/user/update?user_id={{user.user_id }}" type="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <button class="btn btn-danger" type="button" ng-click="delete(user)"><i class="fa-solid fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
 
-                                </tbody>
+                                    </tbody>
 
+                                </div>
 
                             </table>
                         </div>

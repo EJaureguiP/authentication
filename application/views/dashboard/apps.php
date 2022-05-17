@@ -118,9 +118,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     <script>
         //set datatable init
-        $(document).ready(function() {
-            $('#table-apps').DataTable();
-        });
+        //$(document).ready(function() {
+        //    $('#table-apps').DataTable();
+        //});
 
         var app = angular.module('app-apps', []);
 

@@ -42,7 +42,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
           <li class="nav-item"><a class="nav-link active" aria-current="page" id="navbarDropdownNotification" href="<?php echo base_url() ?>index.php/home/login">INGRESAR</a></li>
-          <li class="nav-item"><a class="nav-link" aria-current="page" id="navbarRegister" href="<?php echo base_url() ?>index.php/home/register">REGISTRAR</a></li>
+         <!--<li class="nav-item"><a class="nav-link" aria-current="page" id="navbarRegister" href="<?php echo base_url() ?>index.php/home/register">REGISTRAR</a></li> -->
         </ul>
       </div>
     </nav>
