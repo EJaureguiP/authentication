@@ -50,18 +50,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <h5>Levels</h5>
+                                <h2>Users</h2>
                             </div>
+
                             <div class="col-auto">
-                                <a class="btn btn-success btn-lg form-inline text-end" href="<?php echo base_url(); ?>index.php/dashboard/user/create">Agregar usuario</a>
+                                <a class="btn btn-success btn-lg form-inline text-end" href="<?php echo base_url(); ?>index.php/dashboard/user/create"><i class="fa-solid fa-plus"></i></a>
                             </div>
+
                         </div>
+
 
                     </div>
 
                     <div class="card-body">
                         <div class="container">
-                            <div class="table-responsive">
+
+                            <div class="row">
+                                <div class="col-auto">
+                                    <p>Filter By</p>
+                                </div>
+
+                                <div class="col ">
+                                    <select ng-options="dep as dep.department_name for dep in departments track by dep.department_id" ng-model="selected_department" class="form-control "></select>
+                                </div>
+
+                                <div class="col">
+                                    <select ng-options="plant as plant.plant_name for plant in plants track by plant.plant_id" ng-model="selected_plant" class="form-control"></select>
+                                </div>
+
+                                <div class="col">
+                                    <select ng-options="shift as shift.shift_name for shift in shifts track by shift.shift_id" ng-model="selected_shift" class="form-control"></select>
+                                </div>
+
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Search Text" aria-label="Search Text" aria-describedby="basic-addon1" ng-model="search">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class=" table-responsive">
                                 <table id="table-levels" class="table">
                                     <thead>
                                         <tr>
@@ -79,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     <tbody>
 
-                                        <tr ng-repeat="user in users">
+                                        <tr ng-repeat="user in users | filter:filterByDepartment | filter:filterByPlant | filter:filterByShift | filter:filterByText">
                                             <td>{{user.user_email }}</td>
                                             <td>{{user.user_name}}</td>
                                             <td>{{user.user_lastname}}</td>
@@ -129,7 +160,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         app.controller('users-controller', function($scope, $http, $httpParamSerializerJQLike) {
 
+
             $scope.users = [];
+
+
+            $scope.departments = [];
+            $scope.selected_department = null;
+
+
+            $scope.plants = [];
+            $scope.selected_plant = null;
+
+
+            $scope.shifts = [];
+            $scope.selected_shift = null;
+
+            $scope.search = null;
 
             //init function
             $scope.init = function() {
@@ -137,11 +183,88 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     method: 'get',
                     url: '<?= base_url() ?>index.php/user/all'
                 }).then(function successCallback(response) {
-                    console.log(response.data);
-                    $scope.users = response.data;
+                    //console.log(response.data.users);
+                    $scope.users = response.data.users;
+
+
+                    $scope.departments = response.data.departments;
+                    $scope.departments.unshift({
+                        'department_name': '-- All Departments --'
+                    });
+
+                    $scope.plants = response.data.plants;
+                    $scope.plants.unshift({
+                        'plant_name': '-- All Plants --'
+                    });
+
+                    $scope.shifts = response.data.shifts;
+                    $scope.shifts.unshift({
+                        'shift_name': '-- All Shifts --'
+                    });
+
+
+                    console.log($scope.departments);
 
                 });
             }
+
+
+
+            $scope.filterByDepartment = function(user) {
+
+                if ($scope.selected_department == null || $scope.selected_department.department_id == undefined) {
+                    return true;
+                } else {
+                    if (user.user_department_id == $scope.selected_department.department_id) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+
+
+            $scope.filterByPlant = function(user) {
+
+                if ($scope.selected_plant == null || $scope.selected_plant.plant_id == undefined) {
+                    return true;
+                } else {
+                    if (user.user_plant_id == $scope.selected_plant.plant_id) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+
+
+            $scope.filterByShift = function(user) {
+
+                if ($scope.selected_shift == null || $scope.selected_shift.shift_id == undefined) {
+                    return true;
+                } else {
+                    if (user.user_shift_id == $scope.selected_shift.shift_id) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+
+
+            $scope.filterByText = function(user) {
+
+                //Si el texto de busqueda es null o vacio
+                if ($scope.search == null || $scope.search == '') {
+                    return true;
+                } else {
+                    if (user.user_email.toLowerCase().includes($scope.search.toLowerCase()) || user.user_name.toLowerCase().includes($scope.search.toLowerCase()) || user.user_lastname.toLowerCase().includes($scope.search.toLowerCase())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
 
 
             $scope.delete = function(user) {

@@ -105,11 +105,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="col">
                                 <label for="staticEmail">Department</label>
-
                                 <select ng-model="user.user_department" ng-options="dep as dep.department_name for dep in departments track by dep.department_id" class="form-control"></select>
-
-
                             </div>
+
+                            <div class="col">
+
+                                <label for="staticEmail">Plant</label>
+                                <select ng-model="user.user_plant" ng-options="plant as plant.plant_name for plant in plants track by plant.plant_id" class="form-control"></select>
+                            </div>
+
+                            <div class="col">
+
+                                <label for="staticEmail">Shift</label>
+                                <select ng-model="user.user_shift" ng-options="shift as shift.shift_name for shift in shifts track by shift.shift_id" class="form-control"></select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row my-2">
 
                             <div class="col">
                                 <label for="staticName">Martech Number</label>
@@ -119,26 +133,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <label for="staticLastname">Phone</label>
                                 <input type="text" class="form-control" id="staticLastname" ng-model="user.user_phone" value="">
                             </div>
-                        </div>
-
-
-                        <div class="row my-2">
-                            <div class="col">
-                            </div>
 
                             <div class="col">
-
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" ng-model="user.user_active">
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Active
                                     </label>
                                 </div>
-                            </div>
-
-
-                            <div class="col">
-
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" ng-model="user.user_is_admin">
                                     <label class="form-check-label" for="flexCheckChecked">
@@ -197,6 +199,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $scope.domains = [];
             $scope.departments = [];
             $scope.levels = [];
+            $scope.plants = [];
+            $scope.shifts = [];
+
             $scope.user_id = null;
 
             $scope.user = {};
@@ -216,6 +221,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     $scope.levels = response.data.levels;
                     $scope.domains = response.data.domains;
                     $scope.departments = response.data.departments;
+                    $scope.plants = response.data.plants;
+                    $scope.shifts = response.data.shifts;
                     $scope.loadUser();
                 });
             }
@@ -252,8 +259,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         $scope.user.user_active = $scope.user.user_active == 1 ? true : false;
                         $scope.user.user_is_admin = $scope.user.user_is_admin == 1 ? true : false;
 
+                        const plantFound = $scope.plants.filter(plant => plant.plant_id == $scope.user.user_plant_id);
+                        $scope.user.user_plant = plantFound[0];
+
+                        const shiftFound = $scope.shifts.filter(shift => shift.shift_id == $scope.user.user_shift_id);
+                        $scope.user.user_shift = shiftFound[0];
+
                     });
 
+                } else {
+                    //Por default seleccionar el primer dominio que traiga de la base de datos...
+                    $scope.user.user_domain = $scope.domains[0];
                 }
             }
 
@@ -290,6 +306,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     return;
                 }
 
+
+
+                if (($scope.user.user_plant == undefined) || ($scope.user.user_shift == undefined)) {
+                    Swal.fire(
+                        'Could not be done!',
+                        'Please you need to set a Plant site and/or a Shift for this user',
+                        'error'
+                    )
+                    return;
+                }
+
                 var data = {
                     user_id: $scope.user.user_id,
                     user_email: $scope.user.user_email + '@' + $scope.user.user_domain.domain_name,
@@ -302,11 +329,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     user_active: ($scope.user.user_active) ? 1 : 0,
                     user_is_admin: ($scope.user.user_is_admin) ? 1 : 0,
                     user_level_id: parseInt($scope.user.user_level.level_id),
+                    user_plant_id: parseInt($scope.user.user_plant.plant_id),
+                    user_shift_id: parseInt($scope.user.user_shift.shift_id),
                 };
 
-                //console.log(data);
 
-                //if (true) return;
 
                 $http({
                     url: '<?php echo base_url() ?>index.php/user/save',
@@ -317,7 +344,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     }
                 }).then(function successCallback(response) {
                     console.log(response.data);
-                    window.location.href = "<?php echo SERVER_PATH_URL; ?>authentication/index.php/dashboard/users";
+
+                    if (response.data.result == 'fail') {
+                        Swal.fire(
+                            'Could not be done!',
+                            response.data.error,
+                            'error'
+                        )
+                    } else {
+                        window.location.href = "<?php echo SERVER_PATH_URL; ?>authentication/index.php/dashboard/users";
+                    }
+
+
                 });
             }
 
