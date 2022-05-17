@@ -92,5 +92,5 @@ defined('DATE_FORMAT')      or define('DATE_FORMAT', 'Y-m-d');
 defined('JWT_KEY')      or define('JWT_KEY', 'martechmedicals.com');
 
 
-defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://localhost/');
-//defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://mxmtsvrandon1/');
+//defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://localhost/');
+defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://mxmtsvrandon1/');
