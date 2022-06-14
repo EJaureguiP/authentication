@@ -135,9 +135,10 @@ class Home extends CI_Controller
 			$password = $this->input->post('user_password');
 			$from = $this->input->post('from');
 
-			$this->db->select('users.*, levels.level_name, levels.level_value');
+			$this->db->select('users.*, levels.level_name, levels.level_value, departments.department_name, departments.department_id');
 			$this->db->from('users');
 			$this->db->join('levels', 'users.user_level_id = levels.level_id', 'inner');
+			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
 			$this->db->where('user_email', $username);
 			$result = $this->db->get()->result_array();
 
@@ -176,6 +177,8 @@ class Home extends CI_Controller
 						$url .= '&user_is_admin=' . $data['user_is_admin'];
 						$url .= '&user_level_name=' . $data['level_name'];
 						$url .= '&user_level_value=' . $data['level_value'];
+						$url .= '&user_department_name=' . $data['department_name'];
+						$url .= '&user_department_id=' . $data['department_id'];
 						$url .= '&from=' . $from;
 						redirect($url);
 					} else {
