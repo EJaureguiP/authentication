@@ -55,10 +55,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="col-md-6"><label class="form-label" for="inputUserName">Name</label> <input class="form-control" id="inputUserName" type="text" name="user_name"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputUserLastname">Lastname</label> <input class="form-control" id="inputUserLastname" type="text" name="user_lastname"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputUserLastname">Last Name</label> <input class="form-control" id="inputUserLastname" type="text" name="user_lastname"></div>
 
                         <div class="col-md-6"><label class="form-label" for="inputUserPassword">Password</label> <input class="form-control" id="inputUserPassword" type="password" name="user_password"></div>
-                        <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Retype Password</label> <input class="form-control" id="inputRetypePassword" type="password" nqme="retype"></div>
+                        <div class="col-md-6"><label class="form-label" for="inputRetypePassword">Repeat Password</label> <input class="form-control" id="inputRetypePassword" type="password" nqme="retype"></div>
 
                         <div class="mt-3 text-end">
                             <div class="btn-group">
