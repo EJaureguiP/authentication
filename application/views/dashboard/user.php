@@ -75,6 +75,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <select ng-model="user.user_domain" ng-options="domain as domain.domain_name for domain in domains track by domain.domain_id" class="form-control"></select>
                             </div>
 
+                            <div class="col">
+                                <label for="staticMartechSign">Martech Sign</label>
+                                <input type="text" ng-model="user.user_martech_sign" class="form-control" id="staticMartechSign" value="">
+                            </div>
 
                         </div>
                         <div class="row my-2">
@@ -275,12 +279,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             $scope.save = function() {
 
-                if ($scope.user.user_name == undefined || $scope.user.user_lastname == undefined || $scope.user.user_password == undefined || $scope.user.user_department == undefined) {
+                if ($scope.user.user_name == undefined || $scope.user.user_lastname == undefined || $scope.user.user_password == undefined || $scope.user.user_department == undefined || $scope.user.user_martech_sign == undefined) {
 
                     console.log($scope.user);
                     Swal.fire(
                         'Could not be done!',
-                        'You need to set user name, lastname, department and password.',
+                        'You need to set user name, martech sign,  lastname, department and password.',
                         'error'
                     )
                     return;
@@ -331,6 +335,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     user_level_id: parseInt($scope.user.user_level.level_id),
                     user_plant_id: parseInt($scope.user.user_plant.plant_id),
                     user_shift_id: parseInt($scope.user.user_shift.shift_id),
+                    user_martech_sign: $scope.user.user_martech_sign,
                 };
 
 

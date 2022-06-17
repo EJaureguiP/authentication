@@ -95,6 +95,7 @@ class User extends CI_Controller
 
 		$data = array(
 			'user_email' => $this->input->post('user_email'),
+			'user_martech_sign' => $this->input->post('user_martech_sign'),
 			'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
 			'user_name' => $this->input->post('user_name'),
 			'user_lastname' => $this->input->post('user_lastname'),
