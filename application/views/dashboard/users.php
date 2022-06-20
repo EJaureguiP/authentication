@@ -114,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <td>{{user.user_email }}</td>
                                             <td>{{user.user_name}}</td>
                                             <td>{{user.user_lastname}}</td>
-                                            <td>{{user.user_marterch_number}}</td>
+                                            <td>{{user.user_martech_number}}</td>
                                             <td>{{user.department_name}}</td>
                                             <td>{{user.user_phone}}</td>
                                             <td>{{ (user.user_active == 1) ? 'True' : 'False'  }}</td>
