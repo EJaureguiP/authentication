@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=5.3.7",
 		"firebase/php-jwt": "^6.1",
-		"paragonie/sodium_compat": "^1.17"
+		"paragonie/sodium_compat": "^1.17",
+		"ivantcholakov/codeigniter-phpmailer": "^1.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

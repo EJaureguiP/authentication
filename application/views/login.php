@@ -40,8 +40,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card col-6 m-auto d-block">
                 <div class="text-center mt-4" data-component-card>
                     <img src="<?php echo base_url() ?>/assets/img/logo.png" alt="Martech Logo" width="120">
-                    <h3 class="text-900 mb-0 mt-5">Login</h3>
-                    <p class="mb-0 mt-2 text-800">Provide your email and password</p>
+                    <h3 class="text-900 mb-0 mt-1">Login</h3>
+                    <p class="mb-0 mt-2 text-800">Necesitas ingresar Correo y contraseña</p>
                 </div>
                 <div class="card-body p-0">
                     <form class="row g-3 m-3" method="post" action="
@@ -67,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         }
                         ?>
 
-                        <div class="col-md-12"><label class="form-label" for="inputName">Email</label>
+                        <div class="col-md-12"><label class="form-label" for="inputName">Correo</label>
                             <div class="input-group mb-3">
                                 <input class="form-control" type="text" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="user">
                                 <span class="input-group-text" id="basic-addon1">@</span>
@@ -83,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
 
 
-                        <div class="col-md-12"><label class="form-label" for="inputUserPassword">Password</label>
+                        <div class="col-md-12"><label class="form-label" for="inputUserPassword">contraseña</label>
                             <input class="form-control" id="inputUserPassword" type="password" name="user_password">
                         </div>
 
@@ -91,15 +91,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                         <div class="btn-group mt-3">
-
                             <?php
                             if (!$from) {
                                 echo '<a class="btn btn-secondary mb-3" href="' . base_url() . 'index.php">CANCEL</a>';
                             }
                             ?>
-
-                            <button class="btn btn-danger mb-3" type="submit">LOGIN</button>
+                            <button class="btn btn-danger mb-3" type="submit">ENTRAR</button>
                         </div>
+
+
+                        <div class="row">
+                            <div class="col text-end">
+                                <a href="<?php base_url() ?>reset-password" target="_blank">Olvide mi contraseña</a>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
 

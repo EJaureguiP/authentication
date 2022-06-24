@@ -30,7 +30,7 @@ class Home extends CI_Controller
 	 */
 	public function index()
 	{
-		if ($this->session->user_email != null &&  $this->session->user_active == 1 &&  $this->session->user_is_admin == 1) {
+		if ($this->session->user_email != null &&  $this->session->user_active == 1) {
 			redirect('dashboard', 'refresh');
 		} else {
 			$this->load->view('home');
@@ -40,6 +40,11 @@ class Home extends CI_Controller
 	public function dashboard()
 	{
 		$this->load->view('dashboard');
+	}
+
+	public function permission_denied()
+	{
+		$this->load->view('errors/html/error_no_permission');
 	}
 
 	public function register()
@@ -102,6 +107,14 @@ class Home extends CI_Controller
 	}
 
 
+	public function reset_password()
+	{
+		$this->load->model('domain');
+		$data['domains'] =	$this->domain->get_entries();
+		$this->load->view('reset_password', $data);
+	}
+
+
 	public function logout()
 	{
 		$array_items = array('user_email', 'user_name', 'user_lastname', 'user_martech_number', 'user_active', 'user_is_admin');
@@ -159,6 +172,7 @@ class Home extends CI_Controller
 					$data = $result[0];
 
 					$user_date = array(
+						'user_id' => $data['user_id'],
 						'user_email' => $data['user_email'],
 						'user_name' => $data['user_name'],
 						'user_lastname' => $data['user_lastname'],

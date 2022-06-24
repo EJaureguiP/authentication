@@ -62,7 +62,13 @@ $route['dashboard/users']['get'] = 'dashboard/users';
 
 
 $route['dashboard/user/create']['get'] = 'dashboard/user_create';
+
 $route['dashboard/user/update']['get'] = 'dashboard/user_update';
+
+$route['dashboard/user/update_profile']['get'] = 'dashboard/user_update_profile';
+
+$route['user/update_profile']['post'] = 'user/update_profile';
+
 $route['dashboard/user/create']['post'] = 'dashboard/user_create_save';
 
 
@@ -76,6 +82,15 @@ $route['register']['post'] = 'home/register_save';
 $route['login']['get'] = 'home/login';
 $route['login']['post'] = 'home/login_enter';
 $route['logout']['get'] = 'home/logout';
+
+//RESET PASSWORD RECOVERY...
+$route['reset-password']['get'] = 'home/reset_password';
+$route['send-email-recovery']['post'] = 'user/send_email_recovery';
+$route['reset-password-with-code']['post'] = 'user/reset_password_by_email_code';
+
+
+$route['permission_denied']['get'] = 'home/permission_denied';
+
 
 $route['application']['get'] = 'application/index';
 $route['application/all'] = 'application/get_all';
@@ -96,6 +111,10 @@ $route['user/all'] = 'user/get_all';
 $route['user/create']['post'] = 'user/create';
 $route['user/update']['post'] = 'user/update';
 $route['user/save']['post'] = 'user/save';
+
+$route['user/save_individual_profile']['post'] = 'user/save_individual_profile';
+
+
 $route['user/delete']['post'] = 'user/delete';
 
 $route['user/delete']['post'] = 'user/delete';

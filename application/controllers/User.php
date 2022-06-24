@@ -152,6 +152,118 @@ class User extends CI_Controller
 	}
 
 
+	public function save_individual_profile()
+	{
+
+		$user_id = $this->input->post('user_id');
+
+		$data = array(
+			'user_martech_sign' => $this->input->post('user_martech_sign'),
+			'user_name' => $this->input->post('user_name'),
+			'user_lastname' => $this->input->post('user_lastname'),
+			'user_phone' => $this->input->post('user_phone'),
+		);
+
+		$response['data'] = $data;
+		$this->db->where('user_id', $this->input->post('user_id'));
+
+		if ($this->db->update('users', $data)) {
+			$response['result'] = 'ok';
+		} else {
+			$response['result'] = 'fail';
+			$response['error'] = $this->db->error();
+		}
+
+		echo json_encode($response);
+	}
+
+
+	public function send_email_recovery()
+	{
+		$email = $this->input->post('email');
+
+		$this->db->select('user_id');
+		$this->db->from('users');
+		$this->db->where('user_email', $email);
+		$users = $this->db->get()->result_array();
+
+		if (count($users) == 0) {
+			//No se encontro el correo, username
+			$result['response'] = 'fail';
+			$result['message'] = 'No se encontró el Email o Usuario';
+			echo json_encode($result);
+		} else {
+			//generar el recovery code
+			$user_id = $users[0]['user_id'];
+			$recovery_code = '';
+			for ($i = 0; $i <= 5; $i++) {
+				$recovery_code .=  strval(rand(0, 9));
+			}
+			$data = array(
+				'user_recovery_code' => $recovery_code
+			);
+			$this->db->where('user_id', $user_id);
+			$this->db->update('users', $data);
+
+			//Enviar Email para recuperacion
+
+			$subject = "Codigo de Recuperación - Martech Sistema de Autentificación";
+			$message = "
+			<p>El código para recuperar su password es <b>{$recovery_code}</b>.</p>";
+
+			$this->load->helper('sendemail');
+			send($email, $subject, $message, 'jgomez@martechmedical.com', 'jgomez@martechmedical.com');
+
+			$result['response'] = 'ok';
+			//$result['code'] = $recovery_code;
+			echo json_encode($result);
+		}
+	}
+
+	public function reset_password_by_email_code()
+	{
+		$email = $this->input->post('email');
+		$code = $this->input->post('code');
+		$password = $this->input->post('password');
+
+
+		$this->db->select('user_id');
+		$this->db->from('users');
+		$this->db->where('user_email', $email);
+		$this->db->where('user_recovery_code', $code);
+		$users = $this->db->get()->result_array();
+		if (count($users) == 0) {
+			//No se encontro el email con el codigo
+			$result['response'] = 'fail';
+			$result['message'] = 'El codigo es inválido';
+			echo json_encode($result);
+		} else {
+
+			//generar el recovery code
+			$data = array(
+				'user_password' => password_hash($password, PASSWORD_DEFAULT)
+			);
+			$this->db->where('user_email', $email);
+			$this->db->where('user_recovery_code', $code);
+			$this->db->update('users', $data);
+
+
+			//Set to null the recovery code...
+			$data = array(
+				'user_recovery_code' => NULL
+			);
+			$this->db->where('user_email', $email);
+			$this->db->where('user_recovery_code', $code);
+			$this->db->update('users', $data);
+
+			$result['response'] = 'ok';
+			echo json_encode($result);
+		}
+	}
+
+
+
+
 	public function delete()
 	{
 		$this->db->where('user_id', $this->input->post('user_id'));
