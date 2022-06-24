@@ -35,8 +35,7 @@ function send($emails, $subject, $message, $from, $reply_to)
         ->send();
 
 
-    var_dump($result);
-
-    echo $ci->email->print_debugger();
+    //var_dump($result);
+    //echo $ci->email->print_debugger();
     exit;
 }

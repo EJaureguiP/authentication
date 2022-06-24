@@ -1,10 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once './vendor/paragonie/sodium_compat/autoload.php';
-require_once './vendor/firebase/php-jwt/src/JWT.php';
-require_once './vendor/firebase/php-jwt/src/JWK.php';
-require_once './vendor/firebase/php-jwt/src/Key.php';
+
 
 use Firebase\JWT\JWT;
 //use Firebase\JWT\JWT;

@@ -88,6 +88,7 @@ $route['reset-password']['get'] = 'home/reset_password';
 $route['send-email-recovery']['post'] = 'user/send_email_recovery';
 $route['reset-password-with-code']['post'] = 'user/reset_password_by_email_code';
 
+$route['test-email']['get'] = 'user/test_email';
 
 $route['permission_denied']['get'] = 'home/permission_denied';
 

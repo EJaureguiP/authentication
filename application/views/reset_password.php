@@ -47,7 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                 <div class="text-center mt-4" data-component-card>
                     <img src="<?php echo base_url() ?>/assets/img/logo.png" alt="Martech Logo" width="120">
-                    <h3 class="text-900 mb-0 mt-1">Generar Nuevo Password</h3>
+                    <h3 class="text-900 mb-0 mt-1">{{title}}</h3>
                 </div>
                 <div class="card-body p-0">
                     <div class="row g-3 m-3">
@@ -74,12 +74,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <div class="col-md-12" ng-show="step==2"><label class="form-label" for="inputName">Codigo</label>
                             <div class="input-group mb-3">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code1">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code2">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code3">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code4">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code5">
-                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code6">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code1" maxlength="1">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code2" maxlength="1">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code3" maxlength="1">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code4" maxlength="1">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code5" maxlength="1">
+                                <input class="form-control ms-1 me-1" type="text" placeholder="" ng-model="code6" maxlength="1">
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </button>
 
                         <div ng-show="step==3">
-                            <p class="bg-primary">Se pudo realizar el cambio de password, Cierre esta pantalla e ingrese de nuevo.</p>
+                            <p>SE HA CAMBIADO SU PASSWORD CORRECTAMENTE! CIERRE ESTA VENTANA E INTENTE INGRESAR NUEVAMENTE</p>
                         </div>
 
                     </div>
@@ -131,6 +131,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $scope.password = '';
             $scope.password2 = '';
 
+            $scope.title = 'Renueve su contraseña';
+
             $scope.init = function() {
                 $scope.step = 1;
                 console.log('Entering here');
@@ -152,9 +154,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     }
                 }).then(function(response) {
 
-                    console.log(response);
 
                     if (response.data.response == 'ok') {
+                        $scope.title = 'Escriba el codigo y su nueva contraseña';
                         $scope.step = 2;
                     } else if (response.data.response == 'fail') {
                         Swal.fire(
@@ -203,6 +205,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     console.log(response);
 
                     if (response.data.response == 'ok') {
+                        $scope.title = 'Finalizado';
                         $scope.step = 3;
                     } else if (response.data.response == 'fail') {
                         Swal.fire(

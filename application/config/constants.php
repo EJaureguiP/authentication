@@ -95,4 +95,5 @@ defined('JWT_KEY')      or define('JWT_KEY', 'martechmedicals.com');
 //defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://localhost/');
 defined('SERVER_PATH_URL')      or define('SERVER_PATH_URL', 'http://mxmtsvrandon1/');
 
+// Path to Composer's vendor/ directory, it should end with a trailing slash.
 defined('VENDORPATH') or define('VENDORPATH', rtrim(str_replace('\\', '/', realpath(dirname(APPPATH . 'vendor/autoload.php'))), '/') . '/');

@@ -180,7 +180,49 @@ class User extends CI_Controller
 
 	public function send_email_recovery()
 	{
+
+		$this->load->helper('sendemail');
 		$email = $this->input->post('email');
+
+		$this->db->select('user_id');
+		$this->db->from('users');
+		$this->db->where('user_email', $email);
+		$users = $this->db->get()->result_array();
+
+		if (count($users) == 0) {
+			//No se encontro el correo, username
+			$result['response'] = 'fail';
+			$result['message'] = 'No se encontró el Email o Usuario';
+			echo json_encode($result);
+		} else {
+			//generar el recovery code
+			$user_id = $users[0]['user_id'];
+			$recovery_code = '';
+			for ($i = 0; $i <= 5; $i++) {
+				$recovery_code .=  strval(rand(0, 9));
+			}
+			$data = array(
+				'user_recovery_code' => $recovery_code
+			);
+			$this->db->where('user_id', $user_id);
+			$this->db->update('users', $data);
+
+			//Enviar Email para recuperacion
+
+			$subject = "Codigo de Recuperación - Martech Sistema de Autentificación";
+			$message = "<p>El código para recuperar su password es <b>{$recovery_code}</b>.</p>";
+
+			$result['response'] = 'ok';
+			echo json_encode($result);
+
+			send($email, $subject, $message, 'jgomez@martechmedical.com', 'jgomez@martechmedical.com');
+		}
+	}
+
+
+	public function test_email()
+	{
+		$email = 'ejauregui@martechmedical.com';
 
 		$this->db->select('user_id');
 		$this->db->from('users');
