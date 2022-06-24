@@ -65,7 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <a href="<?php echo base_url() ?>index.php/dashboard/user/update_profile?user_id=<?php echo $this->session->user_id ?>" class="text-decoration-none text-dark">
                                     <div class="card">
                                         <img style="width:4rem;  display: block; margin: auto;  margin-top: 3rem; margin-bottom: 3rem;" src="<?php echo base_url() ?>/assets/img/connection.png" alt="List">
-                                        <h5 style="margin-bottom: 3rem;">Edit Profile</h5>
+                                        <h5 style="margin-bottom: 3rem;">Editar Perfil</h5>
                                     </div>
                                 </a>
                             </div>

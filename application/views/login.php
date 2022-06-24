@@ -101,8 +101,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                         <div class="row">
+
+                            <?php
+                            if ($from) {
+                                echo '
+                                <div class="col text-start">
+                                <a href="' . base_url() . '" target="_blank">Mi Perfil</a>
+                            </div>
+                                ';
+                            }
+                            ?>
+
                             <div class="col text-end">
-                                <a href="<?php base_url() ?>reset-password" target="_blank">Olvide mi contraseña</a>
+                                <a href="<?php echo base_url() ?>reset-password" target="_blank">Olvide mi contraseña</a>
                             </div>
                         </div>
 
