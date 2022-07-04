@@ -176,6 +176,9 @@ class Home extends CI_Controller
 						'user_martech_number' => $data['user_martech_number'],
 						'user_active' => $data['user_active'],
 						'user_is_admin' => $data['user_is_admin'],
+						'user_level_id' => $data['user_level_id'],
+						'user_level_name' => $data['level_name'],
+						'user_level_value' => $data['level_value'],
 					);
 
 					if ($from) {
