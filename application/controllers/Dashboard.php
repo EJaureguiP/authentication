@@ -112,15 +112,15 @@ class Dashboard extends CI_Controller
 			$user = $this->db->get()->result_array()[0];
 			$data['user'] = $user;
 
-
-			$this->db->select('sers.*, levels.level_name, levels.level_value, plants.plant_name, plants.plant_value');
+			$this->db->select('users.*, levels.level_name, levels.level_value, plants.plant_name, plants.plant_value');
 			$this->db->join('levels', 'users.user_level_id = levels.level_id', 'inner');
 			$this->db->join('plants', 'users.user_plant_id = plants.plant_id', 'inner');
 			$this->db->from('users');
 			$this->db->where('levels.level_value <', $this->session->user_level_value);
 			$this->db->where('users.user_department_id', $user['user_department_id']);
-			$this->db->where('users.user_shift_id',);
-			$this->db->where('plants.plant_value',);
+			$this->db->where('users.user_shift_id', $data['user']['user_shift_id']);
+			$this->db->where('plants.plant_value', $data['user']['plant_value']);
+			$data['users'] = $this->db->get()->result_array();
 		} else {
 			$data['users'] = $this->db->get('users')->result_array();
 		}
