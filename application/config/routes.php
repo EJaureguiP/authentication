@@ -64,6 +64,7 @@ $route['dashboard/users']['get'] = 'dashboard/users';
 $route['dashboard/user/create']['get'] = 'dashboard/user_create';
 
 $route['dashboard/user/update']['get'] = 'dashboard/user_update';
+$route['dashboard/user/update_password']['get'] = 'dashboard/user_update_password';
 
 $route['dashboard/user/update_profile']['get'] = 'dashboard/user_update_profile';
 
@@ -112,6 +113,7 @@ $route['user/all'] = 'user/get_all';
 $route['user/create']['post'] = 'user/create';
 $route['user/update']['post'] = 'user/update';
 $route['user/save']['post'] = 'user/save';
+$route['user/save_password']['post'] = 'user/save_password';
 
 $route['user/save_individual_profile']['post'] = 'user/save_individual_profile';
 

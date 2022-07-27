@@ -93,17 +93,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
 
-                        <div class="row my-2">
-                            <div class="col">
-                                <label for="staticEmail">Password</label>
-                                <input type="text" ng-model="user.user_password" class="form-control" value="">
-                            </div>
-                            <div class=" col">
-                                <label for="staticName">Retype Password</label>
-                                <input type="text" ng-model="user.user_retype" class="form-control" value="">
-                            </div>
-                        </div>
-
 
                         <div class="row my-2">
 
@@ -145,12 +134,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         Active
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" ng-model="user.user_is_admin">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        Admin
-                                    </label>
-                                </div>
+
+
+                                <?php if ($this->session->user_is_admin == 1) : ?>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" ng-model="user.user_is_admin">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Admin
+                                        </label>
+                                    </div>
+                                <?php endif; ?>
+
+
                             </div>
                         </div>
                     </form>
@@ -249,9 +244,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         //search domain name
                         $scope.user.user_domain = foundDomain[0];
 
-                        $scope.user.user_password = '';
-                        $scope.user.user_retype = '';
-
                         const departmentFound = $scope.departments.filter(dep => dep.department_id == $scope.user.user_department_id);
                         $scope.user.user_department = departmentFound[0];
 
@@ -279,7 +271,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             $scope.save = function() {
 
-                if ($scope.user.user_name == undefined || $scope.user.user_lastname == undefined || $scope.user.user_password == undefined || $scope.user.user_department == undefined || $scope.user.user_martech_sign == undefined) {
+                if ($scope.user.user_name == undefined || $scope.user.user_lastname == undefined || $scope.user.user_department == undefined || $scope.user.user_martech_sign == undefined) {
 
                     console.log($scope.user);
                     Swal.fire(
@@ -290,15 +282,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     return;
                 }
 
-
-                if (!($scope.user.user_password == $scope.user.user_retype)) {
-                    Swal.fire(
-                        'Could not be done!',
-                        'Both fields of password must be equal.',
-                        'error'
-                    )
-                    return;
-                }
 
 
                 if (($scope.user.user_level == undefined)) {
@@ -324,21 +307,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 var data = {
                     user_id: $scope.user.user_id,
                     user_email: $scope.user.user_email + '@' + $scope.user.user_domain.domain_name,
-                    user_password: $scope.user.user_password,
                     user_name: $scope.user.user_name,
                     user_lastname: $scope.user.user_lastname,
                     user_department_id: parseInt($scope.user.user_department.department_id),
                     user_martech_number: $scope.user.user_martech_number,
                     user_phone: $scope.user.user_phone,
                     user_active: ($scope.user.user_active) ? 1 : 0,
-                    user_is_admin: ($scope.user.user_is_admin) ? 1 : 0,
                     user_level_id: parseInt($scope.user.user_level.level_id),
                     user_plant_id: parseInt($scope.user.user_plant.plant_id),
                     user_shift_id: parseInt($scope.user.user_shift.shift_id),
                     user_martech_sign: $scope.user.user_martech_sign,
                 };
 
+                <?php if ($this->session->user_is_admin == 1) : ?>
+                    data.user_is_admin = ($scope.user.user_is_admin) ? 1 : 0;
+                <?php endif; ?>
 
+                console.log(data);
 
                 $http({
                     url: '<?php echo base_url() ?>index.php/user/save',

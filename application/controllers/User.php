@@ -27,10 +27,29 @@ class User extends CI_Controller
 
 	public function get_all()
 	{
-		$this->db->select('users.*, departments.department_name');
-		$this->db->from('users');
-		$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
-		$data['users'] = $this->db->get()->result();
+
+		if ($this->session->user_is_admin == 1) {
+			$this->db->select('users.*, departments.department_name');
+			$this->db->from('users');
+			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+			$data['users'] = $this->db->get()->result();
+		} else {
+			$this->db->select('user_department_id, departments.department_name, user_plant_id, plants.plant_value, user_shift_id');
+			$this->db->from('users');
+			$this->db->join('plants', 'users.user_plant_id = plants.plant_id', 'inner');
+			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+			$this->db->where('user_id', $this->session->user_id);
+			$user = $this->db->get()->result_array()[0];
+
+			$this->db->select('*');
+			$this->db->from('users');
+			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
+			$this->db->where('user_department_id', $user['user_department_id']);
+			$this->db->where('user_plant_id', $user['plant_value']);
+			$this->db->where('user_shift_id', $user['user_shift_id']);
+			$data['users'] = $this->db->get()->result_array();
+		}
+
 
 		$this->db->select('*');
 		$this->db->from('departments');
@@ -148,6 +167,30 @@ class User extends CI_Controller
 				$response['error'] = $this->db->error();
 			}
 		}
+		echo json_encode($response);
+	}
+
+
+	public function save_password()
+	{
+
+		$user_id = $this->input->post('user_id');
+
+		$data = array(
+			'user_password' => password_hash($this->input->post('user_password'), PASSWORD_DEFAULT),
+		);
+
+		//update
+		$response['data'] = $data;
+		$this->db->where('user_id', $user_id);
+
+		if ($this->db->update('users', $data)) {
+			$response['result'] = 'ok';
+		} else {
+			$response['result'] = 'fail';
+			$response['error'] = $this->db->error();
+		}
+
 		echo json_encode($response);
 	}
 

@@ -123,8 +123,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <td>
                                                 <!-- Call to action buttons -->
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>index.php/dashboard/user/update?user_id={{user.user_id }}" type="button"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <button class="btn btn-danger" type="button" ng-click="delete(user)"><i class="fa-solid fa-trash"></i></button>
+                                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>index.php/dashboard/user/update?user_id={{user.user_id }}" type="button" title="actualizar datos"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>index.php/dashboard/user/update_password?user_id={{user.user_id }}" type="button" title="cambiar password"><i class="fa-solid fa-key"></i></a>
+                                                    <button class="btn btn-danger" type="button" ng-click="delete(user)" title="Eliminar registro"><i class="fa-solid fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>

@@ -89,43 +89,19 @@ class Dashboard extends CI_Controller
 			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
 			$this->db->where('user_id', $this->session->user_id);
 			$user = $this->db->get()->result_array()[0];
-			$data['user'] = $user;
 
+			$data['user'] = $user;
 			$this->db->select('*');
 			$this->db->from('users');
 			$this->db->where('user_department_id', $user['user_department_id']);
-			$this->db->where('user_plant_id', $user['user_plant_id']);
+			$this->db->where('user_plant_id', $user['plant_value']);
 			$this->db->where('user_shift_id', $user['user_shift_id']);
 			$data['users'] = $this->db->get()->result_array();
-		}*/
-
-
-		$data['users'] = '';
-
-		if ($this->session->user_is_admin != 1) {
-			//bring all data
-			$this->db->select('user_department_id, departments.department_name, user_plant_id, plants.plant_value, user_shift_id');
-			$this->db->from('users');
-			$this->db->join('plants', 'users.user_plant_id = plants.plant_id', 'inner');
-			$this->db->join('departments', 'users.user_department_id = departments.department_id', 'inner');
-			$this->db->where('user_id', $this->session->user_id);
-			$user = $this->db->get()->result_array()[0];
-			$data['user'] = $user;
-
-			$this->db->select('users.*, levels.level_name, levels.level_value, plants.plant_name, plants.plant_value');
-			$this->db->join('levels', 'users.user_level_id = levels.level_id', 'inner');
-			$this->db->join('plants', 'users.user_plant_id = plants.plant_id', 'inner');
-			$this->db->from('users');
-			$this->db->where('levels.level_value <', $this->session->user_level_value);
-			$this->db->where('users.user_department_id', $user['user_department_id']);
-			$this->db->where('users.user_shift_id', $data['user']['user_shift_id']);
-			$this->db->where('plants.plant_value', $data['user']['plant_value']);
-			$data['users'] = $this->db->get()->result_array();
-		} else {
-			$data['users'] = $this->db->get('users')->result_array();
 		}
+		*/
 
-		$this->load->view('dashboard/users', $data);
+		//echo json_encode($data);
+		$this->load->view('dashboard/users');
 	}
 
 	public function user_create()
@@ -135,10 +111,16 @@ class Dashboard extends CI_Controller
 
 	public function user_update()
 	{
-
 		$data['user_id'] = $this->input->get('user_id');
 		$this->load->view('dashboard/user', $data);
 	}
+
+	public function user_update_password()
+	{
+		$data['user_id'] = $this->input->get('user_id');
+		$this->load->view('dashboard/user_password', $data);
+	}
+
 
 
 	public function user_update_profile()
