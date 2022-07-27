@@ -113,7 +113,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             ?>
 
                             <div class="col text-end">
-                                <a href="<?php echo base_url() ?>reset-password" target="_blank">Olvide mi contraseña</a>
+                                <a href="<?php echo base_url() ?>index.php/reset-password" target="_blank">Olvide mi contraseña</a>
                             </div>
                         </div>
 
