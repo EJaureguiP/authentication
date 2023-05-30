@@ -37,7 +37,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
     <div class="container">
         <div class="row py-5">
-            <div class="card col-6 m-auto d-block">
+            <div class="card col-xl-8 col-lg-10 col-md-11 col-sm-12 m-auto d-block">
                 <div class="text-center mt-4" data-component-card>
                     <img src="<?php echo base_url() ?>/assets/img/logo.png" alt="Martech Logo" width="120">
                     <h3 class="text-900 mb-0 mt-1">Login</h3>
